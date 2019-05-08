@@ -1,0 +1,33 @@
+{
+	"prefix": "!",
+	"logFileName": "log.txt",
+	"version":"1.0.0",
+	"token": "",
+	"tts_enabled_global":true,
+
+	"adminCommands":true,
+	"max_purge_num":20,
+
+	"piat_all":true,
+	"guide":true,
+	"info":true,
+	"faction":true,
+	"flip":true,
+	"help":true,
+	"image":true,
+	"template":true,
+
+	"rmap":true,
+	"allMaps":true,
+	"banMap":true,
+	"unbanMap":true,
+	"bannedMaps":true,
+	"random":true,
+
+	"rdiv":true,
+	"allDivs":true,
+
+	"register":true,
+	"enterResults":true
+
+}
