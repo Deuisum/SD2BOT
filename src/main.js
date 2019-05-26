@@ -23,6 +23,7 @@ function findCommand(message, command) {
 
 	switch (command) {
 		// Admin functions
+		//todo
 		case "blacklist":
 			config.adminCommands
 				? admin.blackList(message, bot)

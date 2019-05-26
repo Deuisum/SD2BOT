@@ -35,15 +35,16 @@ module.exports.alterUserInput = (input) => {
  * note: this method doesn't get it right if you miss out a word completely
  * ie "orsha" is closer to "tsel" than "orsha north" to this method
  * */
-module.exports.lexicalGuesser = (input, array) => {
+module.exports.lexicalGuesser = (input, obj) => {
     let closestWord = "";
     let closestNumber = 9999999;
-    for (let word in array) {
-        if (levenshtein(input, word) < closestNumber) {
-            closestNumber = levenshtein(input, word)
-            closestWord = word;
+    
+    Object.keys(obj).forEach((i) => {
+        if (levenshtein(input, i) < closestNumber) {
+            closestNumber = levenshtein(input, i)
+            closestWord = i;
         }
-    }
+    })
     closestNumber = 99999999;
     return closestWord;
 }
@@ -54,45 +55,27 @@ module.exports.userIsRegistered = (message, user) => {
     const sql = `SELECT * FROM players WHERE uid = ${user}`
     let test = "";
 
-    db.serialize( () => {
-        db.each(sql, (err, row) => 
-		{
+    db.serialize(() => {
+        db.each(sql, (err, row) => {
             test = row.UID;
-		}, () => {
+        }, () => {
             return test;
         })
     });
     db.close();
 }
 
-module.exports.sql = async (sql) => {
+module.exports.sql = (sql, params = []) => {
     const db = connect();
-    // db.serialize( () => {
-    //     db.each(sql, (err, row) => 
-	// 	{
-    //         if(err) {
-    //             reject(err);
-    //         }
-    //         resolve(row);
-	// 	}) 
-    // });
-
-    // console.log(sql)
-    // let row;
-    // try {
-    //     row = await new Promise((resolve, reject) => {
-    //         db.get(sql, [], (err, row) => {
-    //             if (err) {
-    //                 reject(err);
-    //             }
-    //             resolve(row);
-    //         });
-    //     });
-    // } catch(ex) {
-    //     console.log(ex)
-    // }
-    // db.close();
-    // return row;
+    return new Promise((resolve, reject) => {
+        db.all(sql, params, (err, row) => {
+            if (err) {
+                reject({ id: [], err: err })
+            } else {
+                resolve({ id: row, error: "" })
+            }
+        })
+    })
 }
 
 module.exports.connect = connect = () => {

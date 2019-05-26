@@ -1,8 +1,12 @@
 const common = require("../general/common");
 const validate = require("./validate-data");
 
-module.exports.resultsMain = (message, client) => {
-    validate.validateResults(message, client)
+module.exports.resultsMain = async (message, client) => {
+    const a = await validate.validateResults(message, client);
+    if(a === undefined){
+        return;
+    }
+    console.log(a)
 }
 
 module.exports.registerUser = (message) => {
