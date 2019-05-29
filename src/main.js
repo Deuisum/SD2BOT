@@ -86,6 +86,11 @@ function findCommand(message, command) {
 				? misc.image(message)
 				: common.moduleDisabledMsg(message, 'misc');
 			break;
+		// case "prediction":
+		// 	config.results
+		// 		? results.prediction(message, input)
+		// 		: common.moduleDisabledMsg(message, 'results');
+		// 	break;
 
 		// Map functions
 		case "rmap":

@@ -42,7 +42,7 @@ module.exports.validateResults = async (message) => {
     getBans(input);
     findPlayers(input);
     findDivs(input);
-    verifyPlayers();
+    await verifyPlayers();
     await verifyPlayedDivs();
     validateMissingInputs();
     if (resultStateObject.error) {
@@ -54,7 +54,6 @@ module.exports.validateResults = async (message) => {
     if(!resultStateObject.isDraw){
         winnerAndLoserDivs();
     }
-
     return resultStateObject;
 }
 
@@ -110,7 +109,6 @@ async function verifyPlayers() {
 
 
 function verifyPlayedDivs() {
-    
     resultStateObject.playerDivs.forEach((i) => {
         if (!common.allies.hasOwnProperty(i) && !common.axis.hasOwnProperty(i)) {
             resultStateObject.error = true;
@@ -247,6 +245,14 @@ function validateMissingInputs() {
         resultStateObject.errorBool = true;
         resultStateObject.errorText.push(`\nMissing required line \`P2 Name:\`, please use ${config.prefix} template to request a template to fill in.`);
     }
+    if (!resultStateObject.hasPlayerOneDiv) {
+        resultStateObject.errorBool = true;
+        resultStateObject.errorText.push(`\nMissing required line \`P1 Div:\`, please use ${config.prefix} template to request a template to fill in.`);
+    }
+    if (!resultStateObject.hasPlayerTwoDiv) {
+        resultStateObject.errorBool = true;
+        resultStateObject.errorText.push(`\nMissing required line \`P2 Div:\`, please use ${config.prefix} template to request a template to fill in.`);
+    }
 }
 
 
@@ -264,7 +270,7 @@ function init() {
     resultStateObject.hasPlayerOneDiv = false;
     resultStateObject.hasPlayerTwoDiv = false;
     resultStateObject.hasMapPlayed = false;
-    resultStateObject.hasWinnerDiv = false;
+    resultStateObject.hasWinner = false;
     resultStateObject.hasLoser = false;
 
     resultStateObject.winnerName = "";
