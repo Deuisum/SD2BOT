@@ -8,7 +8,7 @@
 	"adminCommands":true,
 	"results":true,
 	"max_purge_num":20,
-	"k_value": 25,
+	"k_value": 32,
 
 	"piat_all":true,
 	"guide":true,

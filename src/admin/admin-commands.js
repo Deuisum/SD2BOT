@@ -1,7 +1,4 @@
 const path = require("path");
-const jsonfile = require('jsonfile');
-const file = "userBlackList.json";
-const jsonObj = jsonfile.readFileSync(path.resolve(__dirname, file));
 const common = require("../general/common")
 
 
@@ -18,8 +15,6 @@ const common = require("../general/common")
 // const config = require("./config");
 // const log = require("./logging");
 
-const sqlite3 = require('sqlite3').verbose();
-
 // Creates and populates tables, only needs to be run once on startup
 module.exports.createTables = (message) => {
     if (!message.member.hasPermission('ADMINISTRATOR', true)) {
@@ -27,9 +22,11 @@ module.exports.createTables = (message) => {
         return;
     }
     const db = common.connect();
-    const sqlPlayer = "CREATE TABLE IF NOT EXISTS players(UID text PRIMARY KEY, Name text NOT NULL, Wins integer NOT NULL, Draws integer NOT NULL, Losses integer NOT NULL, WinPercent integer NOT NULL, Elo integer NOT NULL, AlliesPercent integer NOT NULL, AxisPercent integer NOT NULL )";
+    const sqlPlayer = "CREATE TABLE IF NOT EXISTS players(UID text PRIMARY KEY, Name text NOT NULL, Wins integer NOT NULL, Draws integer NOT NULL, Losses integer NOT NULL, WinPercent integer NOT NULL, Elo integer NOT NULL, AlliesPercent integer NOT NULL, AxisPercent integer NOT NULL, WinStreak integer NOT NULL)";
     const sqlDivs = "CREATE TABLE IF NOT EXISTS divResults(Name text PRIMARY KEY, Wins integer NOT NULL, Draw integer NOT NULL, Loss integer NOT NULL, WinPercent integer NOT NULL, Picks integer NOT NULL, Bans integer NOT NULL)";
     const sqlMaps = "CREATE TABLE IF NOT EXISTS mapResults(Name text PRIMARY KEY, Picks integer NOT NULL, Bans integer NOT NULL)"
+    const blacklistTable = "CREATE TABLE IF NOT EXISTS blacklist(blockedUID integer PRIMARY KEY, blockedName text NOT NULL, date text NOT NULL)"
+    const adminTable = "CREATE TABLE IF NOT EXISTS admins(UID text PRIMARY KEY, Name text NOT NULL)"
 
     // Creates empty tables
     db.serialize(() => {
@@ -46,6 +43,16 @@ module.exports.createTables = (message) => {
         db.run(sqlMaps, (err) => {
             if (err) { console.log(err); }
             else { message.channel.send("'mapResults' table created if it doesn't exist.") }
+        });
+
+        db.run(adminTable, (err) => {
+            if (err) { console.log(err); }
+            else { message.channel.send("'adminTable' table created if it doesn't exist.") }
+        });
+
+        db.run(blacklistTable, (err) => {
+            if (err) { console.log(err); }
+            else { message.channel.send("'blacklistTable' table created if it doesn't exist.") }
         });
     })
 
@@ -66,6 +73,58 @@ module.exports.createTables = (message) => {
     message.channel.send("'divResults' populated");
     db.close();
 }
+
+async function hasPermission(message, id) {
+    const isAdmin = await common.sql(`SELECT * FROM admins WHERE UID = "${id}"`)
+        .catch((err) => {
+            console.log(err)
+        })
+    if (message.member.hasPermission('ADMINISTRATOR') || isAdmin.id.length >= 1) {
+        return true;
+    }
+    return false;
+}
+
+module.exports.addAdmin = async (message) => {
+    if(await !hasPermission(message, message.author.id)){
+        common.reply(message, "Error. You have invalid permissions for this command.");
+        return;
+    }
+
+    if(message.mentions.users.size === 0){
+        common.reply(message, "Error. Please @ a user to be added as admin.");
+        return;
+    }
+
+    const id = message.mentions.users.array()[0].id;
+    const username = message.mentions.users.array()[0].username;
+    const answer = await common.sql('INSERT INTO admins VALUES(?,?)', [id, username])
+        .catch((msg) => {
+            message.channel.send(msg.err.toString())
+        })
+    if(answer !== undefined){
+        common.say(message, `<@${id}> added as an admin.`);
+    }
+}
+
+module.exports.removeAdmin = async (message) => {
+    if(await !hasPermission(message, message.author.id)){
+        common.reply(message, "Error. You have invalid permissions for this command.");
+        return;
+    }
+
+    if(message.mentions.users.size === 0){
+        common.reply(message, "Error. Please @ a user to be added as admin.");
+        return;
+    }
+    const id = message.mentions.users.array()[0].id;
+    await common.sql('DELETE FROM admins WHERE uid = ?', [id])
+        .catch((msg) => {
+            message.channel.send(msg.err.toString())
+        })
+    common.say(message, `<@${id}> removed as an admin.`);
+}
+
 
 
 // TODO: FIX ERRORS -NOT WORKING ATM

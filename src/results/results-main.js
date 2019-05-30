@@ -4,26 +4,26 @@ const validate = require("./validate-data");
 const enter = require("./enter-data");
 
 module.exports.resultsMain = async (message, client) => {
-    const obj = await validate.validateResults(message, client);
-    if (obj === undefined) {
-        return;
-    }
-    enter.enterData(obj);
+    // const obj = await validate.validateResults(message, client);
+    // if (obj === undefined) {
+    //     return;
+    // }
+    // enter.enterData(obj);
 
     //hardcoded now to test, will change later
-    await updatePlayersElo('84696940742193152','318749965142851586',"p1win")
+    await updatePlayersElo(message, '84696940742193152','318749965142851586',"p1win")
 }
 
-async function updatePlayersElo(p1uid, p2uid, outcome){
+async function updatePlayersElo(message, p1uid, p2uid, outcome){
     switch(outcome){
         case "p1win":
-            await updateTable(p1uid, p2uid, 1, 0);
+            await updateTable(message, p1uid, p2uid, 1, 0);
             break;
         case "p2win":
-            await updateTable(p1uid, p2uid, 0, 1)
+            await updateTable(message, p1uid, p2uid, 0, 1)
             break;
         case "p1win":
-            await updateTable(p1uid, p2uid, 0.5, 0.5)
+            await updateTable(message, p1uid, p2uid, 0.5, 0.5)
             break;
     }
 }
@@ -33,7 +33,7 @@ module.exports.registerUser = (message) => {
     let discordID = message.author.id;
     let username = message.author.username;
 
-    db.all('INSERT INTO players VALUES(?,?,?,?,?,?,?,?,?)', [discordID, username, 0, 0, 0, 0, 1000, 0, 0], (err) => {
+    db.all('INSERT INTO players VALUES(?,?,?,?,?,?,?,?,?,?)', [discordID, username, 0, 0, 0, 0, 1500, 0, 0, 0], (err) => {
         if (err) {
             const errMsg = err.message === "SQLITE_CONSTRAINT: UNIQUE constraint failed: players.UID"
                 ? "You are already registered."
@@ -45,11 +45,12 @@ module.exports.registerUser = (message) => {
     });
     db.close();
 }
-async function updateTable(p1uid, p2uid, p1Score, p2Score){
+
+async function updateTable(message, p1uid, p2uid, p1Score, p2Score){
     const p1Elo = await getPlayerElo(p1uid);
     const p2Elo = await getPlayerElo(p2uid);
-    let newP1Elo = p1Elo + config.k_value * (p1Score - getChanceToWin(p1Elo, p2Elo))
-    let newP2Elo = p2Elo + config.k_value * (p2Score - getChanceToWin(p2Elo, p1Elo))
+    const newP1Elo = p1Elo + config.k_value * (p1Score - getChanceToWin(p1Elo, p2Elo))
+    const newP2Elo = p2Elo + config.k_value * (p2Score - getChanceToWin(p2Elo, p1Elo))
 
     await common.sql('UPDATE PLAYERS SET Elo = ? WHERE UID = ?', [newP1Elo, p1uid])
         .catch((e) => {
@@ -57,14 +58,14 @@ async function updateTable(p1uid, p2uid, p1Score, p2Score){
         })
 
     await common.sql('UPDATE PLAYERS SET Elo = ? WHERE UID = ?', [newP2Elo, p2uid])
-        .catch(() => {
-            console.log(eval)
+        .catch((e) => {
+            console.log(e)
         })
-    
-    console.log("new elo of" + p1uid + " is " + newP1Elo)
-    console.log("new elo of" + p2uid + " is " + newP2Elo)
-    console.log("----------------")
 
+    const p1EloChange = newP1Elo-p1Elo;
+    const p2EloChange = newP2Elo-p2Elo;    
+    common.say(message, `<@${p1uid}> Updated ELO: ${newP1Elo.toFixed(2)} (${p1EloChange < 0 ? '':'+'}${p1EloChange.toFixed(2)})
+<@${p2uid}> Updated ELO: ${newP2Elo.toFixed(2)} (${p2EloChange < 0 ? '':'+'}${p2EloChange.toFixed(2)})`)
 }
 
 function getChanceToWin(a, b){
@@ -76,12 +77,12 @@ async function getPlayerElo(uid){
     return Object.values(elo.id[0])[0];
 }
 
-module.exports.prediction = (message) => {
-    //return if message contains less than 2 mentions
-    //get first mention uid 
-    //get second mention uid
-
-    const p1Elo = getPlayerElo(p1uid);
-    const p2Elo = getPlayerElo(p2uid);
-    common.say(message, getChanceToWin(p1Elo, p2Elo))
+module.exports.prediction = async (message) => {
+    if(message.mentions.users.size != 2){
+        common.reply(message, "Error in input. Please try again.")
+        return; 
+    }
+    const p1Elo = await getPlayerElo(message.mentions.users.array()[0].id);
+    const p2Elo = await getPlayerElo(message.mentions.users.array()[1].id);
+    common.say(message, `<@${message.mentions.users.array()[0].id}> (${p1Elo}) has ${100*getChanceToWin(p1Elo, p2Elo)}% to win versus <@${message.mentions.users.array()[1].id}> (${p2Elo}).`)
 }

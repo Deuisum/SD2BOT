@@ -176,7 +176,7 @@ function getBans(input) {
     let ban = "";
     input.forEach(element => {
         if (element.match(/(p(1|2)( |-)div( |-)ban( |-)(1|2|3|4|5):)/gi)) {
-            ban = element.substr(13).trim();
+            ban = element.replace(/^.+:/, '').replace("<", "").replace(">", "").replace("@", "").replace("!", "").trim();
             ban = common.alterUserInput(ban);
             if (common.allies.hasOwnProperty(ban) || common.axis.hasOwnProperty(ban)) {
                 resultStateObject.bannedDivs.push(ban)

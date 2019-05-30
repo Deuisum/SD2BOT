@@ -39,11 +39,18 @@ function findCommand(message, command) {
 				? admin.purge(message, input[0])
 				: common.moduleDisabledMsg(message, 'admin');
 			break;
+		case "addadmin":
+				admin.addAdmin(message);
+			break;
+		case "removeadmin":
+				admin.removeAdmin(message);
+			break;
 		case "createtables":
 			config.adminCommands
 				? admin.createTables(message)
 				: common.moduleDisabledMsg(message, 'admin');
 			break;
+		
 
 		// Misc functions
 		case "info":
@@ -77,6 +84,7 @@ function findCommand(message, command) {
 		case "faustpatrone":
 		case "nebelhandgranate":
 		case "hhl3":
+		case "fud":
 			config.piat_all
 				? misc.piat(message)
 				: common.moduleDisabledMsg(message, 'misc');
@@ -86,11 +94,11 @@ function findCommand(message, command) {
 				? misc.image(message)
 				: common.moduleDisabledMsg(message, 'misc');
 			break;
-		// case "prediction":
-		// 	config.results
-		// 		? results.prediction(message, input)
-		// 		: common.moduleDisabledMsg(message, 'results');
-		// 	break;
+		case "prediction":
+			config.results
+				? results.prediction(message)
+				: common.moduleDisabledMsg(message, 'results');
+			break;
 
 		// Map functions
 		case "rmap":
