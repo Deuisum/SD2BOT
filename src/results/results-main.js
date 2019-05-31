@@ -4,14 +4,14 @@ const validate = require("./validate-data");
 const enter = require("./enter-data");
 
 module.exports.resultsMain = async (message, client) => {
-    // const obj = await validate.validateResults(message, client);
-    // if (obj === undefined) {
-    //     return;
-    // }
-    // enter.enterData(obj);
+    const obj = await validate.validateResults(message, client);
+    if (obj === undefined) {
+        return;
+    }
+    enter.enterData(obj);
 
     //hardcoded now to test, will change later
-    await updatePlayersElo(message, '84696940742193152','318749965142851586',"p1win")
+    await updatePlayersElo(message, obj.winnerName, obj.loserName,"p1win")
 }
 
 async function updatePlayersElo(message, p1uid, p2uid, outcome){
