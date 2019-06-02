@@ -75,18 +75,11 @@ module.exports.resetMaps = (message) => {
     message.channel.send("Map pool reset.");
 }
 
-// TODO
-// module.exports.random = random = (message) => {
-// 	if(message.author.id == '157207837561454593')
-// 	{
-// 		oldRandomForVulcan(message, args)
-// 		return;
-// 	}
-// }
-
-
 function printMap(num) {
     const notBannedList = Object.keys(common.maps).slice(0, num).filter(x => { return common.maps[x] });
     const rndMap = Math.floor(Math.random() * notBannedList.length);
+    if(notBannedList.length === 0) {
+        return "No valid maps to pick from."
+    }
     return notBannedList[rndMap];
 }

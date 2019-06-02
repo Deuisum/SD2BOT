@@ -40,10 +40,14 @@ function findCommand(message, command) {
 				: common.moduleDisabledMsg(message, 'admin');
 			break;
 		case "addadmin":
-				admin.addAdmin(message);
+			config.adminCommands
+				? admin.addAdmin(message)
+				: common.moduleDisabledMsg(message, 'admin');
 			break;
 		case "removeadmin":
-				admin.removeAdmin(message);
+			config.adminCommands
+				? admin.removeAdmin(message)
+				: common.moduleDisabledMsg(message, 'admin');
 			break;
 		case "createtables":
 			config.adminCommands
@@ -53,25 +57,30 @@ function findCommand(message, command) {
 		
 
 		// Misc functions
+		case "help":
+			config.help 
+				? misc.help(message, input[0])
+				: common.moduleDisabledMsg(message, 'help');
+			break;
 		case "info":
 			config.info
 				? misc.info(message)
-				: common.moduleDisabledMsg(message, 'misc');
+				: common.moduleDisabledMsg(message, 'info');
 			break;
 		case "faction":
 			config.faction
 				? misc.faction(message)
-				: common.moduleDisabledMsg(message, 'misc');
+				: common.moduleDisabledMsg(message, 'faction');
 			break;
 		case "flip":
 			config.flip
 				? misc.flip(message)
-				: common.moduleDisabledMsg(message, 'misc');
+				: common.moduleDisabledMsg(message, 'flip');
 			break;
 		case "guide":
 			config.guide
 				? misc.guide(message)
-				: common.moduleDisabledMsg(message, 'misc');
+				: common.moduleDisabledMsg(message, 'guide');
 			break;
 		case "piat":
 		case "bazooka":
@@ -87,15 +96,15 @@ function findCommand(message, command) {
 		case "fud":
 			config.piat_all
 				? misc.piat(message)
-				: common.moduleDisabledMsg(message, 'misc');
+				: common.moduleDisabledMsg(message, 'piat');
 			break;
 		case "image":
 			config.image 
 				? misc.image(message)
-				: common.moduleDisabledMsg(message, 'misc');
+				: common.moduleDisabledMsg(message, 'image');
 			break;
 		case "prediction":
-			config.results
+			config.prediction
 				? results.prediction(message)
 				: common.moduleDisabledMsg(message, 'results');
 			break;
@@ -104,72 +113,72 @@ function findCommand(message, command) {
 		case "rmap":
 			config.rmap
 				? map.rmap(message, input[0])
-				: common.moduleDisabledMsg(message, 'maps');
+				: common.moduleDisabledMsg(message, 'random map');
 			break;
 		case "allmaps":
 		case "maps":
 			config.allMaps
 				? map.allMaps(message)
-				: common.moduleDisabledMsg(message, 'maps');
+				: common.moduleDisabledMsg(message, 'all maps');
 			break;
 		case "unbanmap":
-			config.unbanMap
+			config.mapBans
 				? map.banning_unbanningMaps(message, input, true)
-				: common.moduleDisabledMsg(message, 'maps');
+				: common.moduleDisabledMsg(message, 'map bans');
 			break;
 		case "banmap":
-			config.banMap
+			config.mapBans
 				? map.banning_unbanningMaps(message, input, false)
-				: common.moduleDisabledMsg(message, 'maps');
+				: common.moduleDisabledMsg(message, 'map bans');
 			break;
 		case "bannedmaps":
-			config.bannedMaps
+			config.mapBans
 				? map.bannedMaps(message)
-				: common.moduleDisabledMsg(message, 'maps');
+				: common.moduleDisabledMsg(message, 'map bans');
 			break;
 		case "resetmaps":
-			config.bannedMaps
+			config.mapBans
 				? map.resetMaps(message)
-				: common.moduleDisabledMsg(message, 'maps');
+				: common.moduleDisabledMsg(message, 'map bans');
 			break;
 		//TODO
 		// case "random":
 		// 	config.random 
-		// ? map.random(message, input[0]) 
-		// : common.moduleDisabledMsg(message, 'maps');
+		// 		? div.random(message, input) 
+		// 		: common.moduleDisabledMsg(message, 'random');
 		// break;
 
 		// Div functions
 		case "rdiv":
 			config.rdiv
 				? div.rdiv(message, input[0])
-				: common.moduleDisabledMsg(message, 'divisions');
+				: common.moduleDisabledMsg(message, 'random division');
 			break;
 		case "divs":
 		case "alldivs":
-			config.allMaps
+			config.allDivs
 				? div.allDivs(message)
-				: common.moduleDisabledMsg(message, 'divisions');
+				: common.moduleDisabledMsg(message, 'all divisions');
 			break;
 		case "unbandiv":
-			config.unbanDivs
+			config.divBans
 				? div.banning_unbanningDivs(message, input, true)
-				: common.moduleDisabledMsg(message, 'divisions');
+				: common.moduleDisabledMsg(message, 'div bans');
 			break;
 		case "bandiv":
-			config.banDivs
+			config.divBans
 				? div.banning_unbanningDivs(message, input, false)
-				: common.moduleDisabledMsg(message, 'divisions');
+				: common.moduleDisabledMsg(message, 'div bans');
 			break;
 		case "resetdivs":
-			config.resetDivs
+			config.divBans
 				? div.resetDivs(message, input, false)
-				: common.moduleDisabledMsg(message, 'divisions');
+				: common.moduleDisabledMsg(message, 'div bans');
 			break;
 		case "banneddivs":
-			config.bannedDivs
+			config.divBans
 				? div.bannedDivs(message)
-				: common.moduleDisabledMsg(message, 'divisions');
+				: common.moduleDisabledMsg(message, 'div bans');
 			break;
 	}
 }
@@ -186,7 +195,6 @@ function resultsCommands(message, command, bot) {
 				? results.resultsMain(message, bot)
 				: common.moduleDisabledMsg(message, 'results')
 	}
-
 }
 
 bot.on('message', message => {

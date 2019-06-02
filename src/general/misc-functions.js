@@ -1,5 +1,6 @@
 const common = require("./common");
 const config = require("../config");
+const helpCmd = require("./help-embeds");
 const AsciiTable = require('ascii-table');
 
 const sodbotReplies = [
@@ -18,7 +19,7 @@ module.exports.info = (message) => {
     table.setHeading('PTRDBot ' + config.version);
     table.addRow("Written and maintained by mbetts.");
     table.addRow("Find any bugs or want to contribute? Please make an issue/PR on the Github page below.")
-    table.addRow("[TODO: Git link]");
+    table.addRow("https://github.com/matthewbetts96/SD2-SODBOT");
     table.addRow("Hosted on Digital Ocean.");
     table.setAlign(0, AsciiTable.CENTER)
     common.say(message, "``" + table.toString() + "``");
@@ -47,6 +48,7 @@ module.exports.guide = (message) => {
     common.say(message, "``" + table.toString() + "``");
 }
 
+//todo
 module.exports.image = (message)=> {
     const num = Math.floor(Math.random() * 2)
     console.log(num)
@@ -54,6 +56,54 @@ module.exports.image = (message)=> {
         file: `general/images/${num}.png`
     });
 }
+
+module.exports.help = (message, input) => {
+    switch(input){
+        case "maps":
+            helpCmd.mapHelp(message);
+            break;
+        case "divs":
+            helpCmd.divHelp(message);
+            break;
+        case "misc":
+            helpCmd.miscHelp(message);
+            break;
+        case "tourny":
+            break;
+        case "admin":
+            helpCmd.adminHelp(message);
+            break;
+        default:
+            message.channel.send({embed: {
+                color: 3447003,
+                author: {
+                    name: message.client.user.username,
+                    icon_url: message.client.user.avatarURL
+                },
+                fields: [{
+                    name: config.prefix + "help",
+                    value: "Gives this message." 
+                },{
+                    name: config.prefix + "help maps",
+                    value: "Gives help info about map commands." 
+                },{
+                    name: config.prefix + "help divs",
+                    value: "Gives help info about division commands." 
+                },{
+                    name: config.prefix + "help misc",
+                    value: "Gives help info about misc commands." 
+                },{
+                    name: config.prefix + "help tourny",
+                    value: "Gives help info about result commands." 
+                },{
+                    name: config.prefix + "help admin",
+                    value: "Gives help info about admin commands." 
+                }]
+            }}
+        );
+    }
+}
+
 
 module.exports.piat = (message) => {
     const i = Math.random();

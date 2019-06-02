@@ -1,35 +1,36 @@
 {
 	"prefix": "!",
 	"logFileName": "log.txt",
+	"botName": "SD Bot",
 	"version":"1.0.0",
 	"token": "",
 	"tts_enabled_global":true,
-
-	"adminCommands":true,
-	"results":true,
 	"max_purge_num":20,
 	"k_value": 32,
 
-	"piat_all":true,
-	"guide":true,
+	"adminCommands":true,
+	"results":true,
+
+	"piat_all":false,
+	"guide":false,
 	"info":true,
 	"faction":true,
 	"flip":true,
 	"help":true,
-	"image":true,
-	"template":true,
+	"image":false,
 
 	"rmap":true,
 	"allMaps":true,
-	"banMap":true,
-	"unbanMap":true,
-	"bannedMaps":true,
+	"mapBans":true,
 	"random":true,
 
 	"rdiv":true,
 	"allDivs":true,
+	"divBans":true,
 
 	"register":true,
-	"enterResults":true
-
+	"enterResults":true,
+	"queryResults":true,
+	"prediction":true,
+	"template":true
 }
