@@ -75,7 +75,7 @@ module.exports.resetMaps = (message) => {
     message.channel.send("Map pool reset.");
 }
 
-function printMap(num) {
+module.exports.printMap = printMap = (num) => {
     const notBannedList = Object.keys(common.maps).slice(0, num).filter(x => { return common.maps[x] });
     const rndMap = Math.floor(Math.random() * notBannedList.length);
     if(notBannedList.length === 0) {

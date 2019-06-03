@@ -87,8 +87,8 @@ async function verifyPlayers() {
             resultStateObject.errorText.push("Unknown player at Winner.")
         }
         result = await common.sql(`SELECT * FROM players WHERE UID = "${resultStateObject.loserName}"`)
-            .catch(() => {
-                console.log("Caught promise error")
+            .catch((err) => {
+                console.log(err)
             })
         if (result === undefined) {
             resultStateObject.error = true;
@@ -187,7 +187,7 @@ function getBans(input) {
         }
 
         if (element.match(/(p(1|2)( |-)map( |-)ban( |-)(1|2|3|4|5):)/gi)) {
-            ban = element.substr(13).trim();
+            ban = element.replace(/^.+:/, '').replace("<", "").replace(">", "").replace("@", "").replace("!", "").trim();
             ban = common.alterUserInput(ban);
             if (common.maps.hasOwnProperty(ban)) {
                 resultStateObject.bannedMaps.push(ban)
@@ -222,36 +222,44 @@ function isDraw(input) {
 
 function validateMissingInputs() {
     if (!resultStateObject.hasOutcome) {
-        resultStateObject.errorBool = true;
+        resultStateObject.error = true;
         resultStateObject.errorText.push(`\nMissing required line \`Outcome:\`, please use ${config.prefix} template to request a template to fill in`);
     }
     if (!resultStateObject.hasMapPlayed) {
-        resultStateObject.errorBool = true;
+        resultStateObject.error = true;
         resultStateObject.errorText.push(`\nMissing required line \`Map Played:\`, please use ${config.prefix} template to request a template to fill in.`);
     }
     if (!resultStateObject.hasWinner) {
-        resultStateObject.errorBool = true;
+        resultStateObject.error = true;
         resultStateObject.errorText.push(`\nMissing required line \`Winner:\`, please use ${config.prefix} template to request a template to fill in.`);
     }
     if (!resultStateObject.hasLoser) {
-        resultStateObject.errorBool = true;
+        resultStateObject.error = true;
         resultStateObject.errorText.push(`\nMissing required line \`Loser:\`, please use ${config.prefix} template to request a template to fill in.`);
     }
     if (!resultStateObject.hasPlayerOne) {
-        resultStateObject.errorBool = true;
+        resultStateObject.error = true;
         resultStateObject.errorText.push(`\nMissing required line \`P1 Name:\`, please use ${config.prefix} template to request a template to fill in.`);
     }
     if (!resultStateObject.hasPlayerTwo) {
-        resultStateObject.errorBool = true;
+        resultStateObject.error = true;
         resultStateObject.errorText.push(`\nMissing required line \`P2 Name:\`, please use ${config.prefix} template to request a template to fill in.`);
     }
     if (!resultStateObject.hasPlayerOneDiv) {
-        resultStateObject.errorBool = true;
+        resultStateObject.error = true;
         resultStateObject.errorText.push(`\nMissing required line \`P1 Div:\`, please use ${config.prefix} template to request a template to fill in.`);
     }
     if (!resultStateObject.hasPlayerTwoDiv) {
-        resultStateObject.errorBool = true;
+        resultStateObject.error = true;
         resultStateObject.errorText.push(`\nMissing required line \`P2 Div:\`, please use ${config.prefix} template to request a template to fill in.`);
+    }
+    if(resultStateObject.loserName.match(/[^0-9]/gi) || resultStateObject.winnerName.match(/[^0-9]/gi)){
+        resultStateObject.error = true;
+        resultStateObject.errorText.push('\nUnknown characters in Winner/Loser.')
+    }
+    if(resultStateObject.playerNames[0].match(/[^0-9]/gi) || resultStateObject.playerNames[1].match(/[^0-9]/gi)){
+        resultStateObject.error = true;
+        resultStateObject.errorText.push('\nUnknown characters in P1/P2 Names.')
     }
 }
 

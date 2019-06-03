@@ -23,7 +23,6 @@ function findCommand(message, command) {
 
 	switch (command) {
 		// Admin functions
-		//todo
 		case "blacklist":
 			config.adminCommands
 				? admin.blackList(message, bot)
@@ -141,12 +140,11 @@ function findCommand(message, command) {
 				? map.resetMaps(message)
 				: common.moduleDisabledMsg(message, 'map bans');
 			break;
-		//TODO
-		// case "random":
-		// 	config.random 
-		// 		? div.random(message, input) 
-		// 		: common.moduleDisabledMsg(message, 'random');
-		// break;
+		case "random":
+			config.random 
+				? div.random(message, input) 
+				: common.moduleDisabledMsg(message, 'random');
+		break;
 
 		// Div functions
 		case "rdiv":

@@ -1,8 +1,9 @@
 const common = require("./common");
-const config = require("../config")
-const AsciiTable = require('ascii-table')
+const config = require("../config");
+const maps = require("./map-functions");
+const AsciiTable = require('ascii-table');
 
-module.exports.rdiv = (message, input) => {
+module.exports.rdiv = rdiv = (message, input, isRandom) => {
     if(!input.includes("axis") && !input.includes("allies")){
         common.reply(message, "Unknown side, please specify 'axis' or 'allies'.");
         return;
@@ -12,7 +13,12 @@ module.exports.rdiv = (message, input) => {
 
 	const notBannedList = Object.keys(divs).filter(x => { return divs[x] });
     const rndDiv = Math.floor(Math.random() * notBannedList.length);
-	common.reply(message, Object.keys(divs)[rndDiv]);
+
+    if(isRandom) {
+        return Object.keys(divs)[rndDiv];
+    } else {
+        common.reply(message, Object.keys(divs)[rndDiv]);
+    }
 }
 
 module.exports.allDivs = (message) => {
@@ -91,4 +97,51 @@ module.exports.resetDivs = (message) => {
         common.allies[key] = true;
     }
     message.channel.send("Map pool reset.");
+}
+
+module.exports.random = (message, input) => {
+    if(isNaN(parseInt(input[0].charAt(0))) | isNaN(parseInt(input[0].charAt(2))))
+	{
+		message.channel.send("Error. Please retry.") 
+		return;
+    }
+    
+    const allies = parseInt(input[0].charAt(0));
+    const axis = parseInt(input[0].charAt(2));
+    const largestInput = Math.max(allies, axis);
+    
+    const table = new AsciiTable(`Random ${input} game`);
+    table.setHeading('Allies', 'Axis');
+
+    //TODO CHANGE THIS TO LIMIT THE MAPS THAT CAN BE SELECTED
+    // if(largestInput >= 4)
+	// {
+	// 	table.setHeading('Map : ',printMap(message, common.maps.length));
+	// } 
+	// else 
+	// {
+	// 	table.setHeading('Map : ', printMap(message, common.maps.length));
+    // }
+
+    const map = maps.printMap(common.maps.length);
+    table.setHeading('Map : ', map);
+
+    let alliesInput = '';
+	let axisInput = '';
+	for(i = 1; i <= largestInput; i++)
+	{
+		alliesInput = 'N/A';
+	    axisInput = 'N/A';
+		if(i <= allies)
+		{
+			alliesInput = rdiv(message, "allies", true);
+		}
+		if(i <= axis)
+		{
+			axisInput = rdiv(message, "axis", true)
+		} 
+		table.addRow(alliesInput, axisInput);
+	}
+    table.setAlign(0, AsciiTable.CENTER).setAlign(1, AsciiTable.CENTER)
+    message.channel.send("``" + table.toString() + "``", {file : `general/images/${map}.jpg`});
 }

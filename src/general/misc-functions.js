@@ -49,12 +49,13 @@ module.exports.guide = (message) => {
 }
 
 //todo
+//have it print out map images
 module.exports.image = (message)=> {
     const num = Math.floor(Math.random() * 2)
     console.log(num)
-    message.channel.send({
-        file: `general/images/${num}.png`
-    });
+    // message.channel.send({
+    //     file: `general/images/${num}.png`
+    // });
 }
 
 module.exports.help = (message, input) => {
