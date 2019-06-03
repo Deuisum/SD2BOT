@@ -63,7 +63,7 @@ async function verifyPlayers() {
         .catch(() => {
             console.log("Caught promise error")
         })
-    if (result === undefined) {
+    if (Object.entries(result)[0][1].length === 0) {
         resultStateObject.error = true;
         resultStateObject.errorText.push("Unknown player at P1 Name.")
     }
@@ -72,7 +72,7 @@ async function verifyPlayers() {
         .catch(() => {
             console.log("Caught promise error")
         })
-    if (result === undefined) {
+    if (Object.entries(result)[0][1].length === 0) {
         resultStateObject.error = true;
         resultStateObject.errorText.push("Unknown player at P2 Name.")
     }
@@ -82,7 +82,7 @@ async function verifyPlayers() {
             .catch(() => {
                 console.log("Caught promise error")
             })
-        if (result === undefined) {
+        if (Object.entries(result)[0][1].length === 0) {
             resultStateObject.error = true;
             resultStateObject.errorText.push("Unknown player at Winner.")
         }
@@ -90,7 +90,7 @@ async function verifyPlayers() {
             .catch((err) => {
                 console.log(err)
             })
-        if (result === undefined) {
+        if (Object.entries(result)[0][1].length === 0) {
             resultStateObject.error = true;
             resultStateObject.errorText.push("Unknown player at Loser.")
         }
