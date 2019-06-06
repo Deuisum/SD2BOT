@@ -38,7 +38,7 @@ module.exports.alterUserInput = (input) => {
 module.exports.lexicalGuesser = (input, obj) => {
     let closestWord = "";
     let closestNumber = 9999999;
-    
+
     Object.keys(obj).forEach((i) => {
         if (levenshtein(input, i) < closestNumber) {
             closestNumber = levenshtein(input, i)
@@ -86,6 +86,7 @@ module.exports.connect = connect = () => {
     });
 }
 
+//todo proper names for scots and french and 352
 module.exports.allies = {
     "2nd Guards": true,
     "29th Tank Corps": true,
@@ -95,7 +96,11 @@ module.exports.allies = {
     "9th Guards": true,
     "26th Guards": true,
     "44th Guards": true,
-    "184th Guards": true
+    "184th Guards": true,
+    "3rd Armoured": true,
+    "3rd Canadian": true,
+    "15th Scottish": true,
+    "frenchies": true, 
 }
 
 module.exports.axis = {
@@ -107,11 +112,22 @@ module.exports.axis = {
     "Gruppe Harteneck": true,
     "Koruck 559": true,
     "1st Lovas": true,
-    "12th Tartalekos": true
+    "12th Tartalekos": true,
+    "21st Panzer": true,
+    "Pz Lehr": true,
+    "116 Panzer": true,
+    "352 Infantry": true,
 }
 
 module.exports.maps = {
+    "Orsha North": true,
+    "Vitebsk East": true,
     "Tsel": true,
-    "Orsha North": true
+    "Lyakhavichy": true,
+    "Autobahn Zur Holle": true,
+    "Orsha East": true,
+    "Beshankovichy": true,
+    "Naratch Lake": true,
+    "Shchedrin": true
 };
 

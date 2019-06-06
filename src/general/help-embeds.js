@@ -122,6 +122,10 @@ module.exports.adminHelp = (message) => {
     });
 }
 
+module.exports.tournyHelp = (message) => {
+    
+}
+
 function isEnabled(i) {
     if (i === true) {
         return "Enabled: :white_check_mark:"

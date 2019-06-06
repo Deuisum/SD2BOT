@@ -8,10 +8,10 @@ module.exports.resultsMain = async (message, client) => {
     if (obj === undefined) {
         return;
     }
-    enter.enterData(obj);
+    // enter.enterData(obj);
 
     //hardcoded now to test, will change later
-    await updatePlayersElo(message, obj.winnerName, obj.loserName,"p1win")
+    // await updatePlayersElo(message, obj.winnerName, obj.loserName,"p1win")
 }
 
 async function updatePlayersElo(message, p1uid, p2uid, outcome){
@@ -26,24 +26,6 @@ async function updatePlayersElo(message, p1uid, p2uid, outcome){
             await updateTable(message, p1uid, p2uid, 0.5, 0.5)
             break;
     }
-}
-
-module.exports.registerUser = (message) => {
-    const db = common.connect();
-    let discordID = message.author.id;
-    let username = message.author.username;
-
-    db.all('INSERT INTO players VALUES(?,?,?,?,?,?,?,?,?,?)', [discordID, username, 0, 0, 0, 0, 1500, 0, 0, 0], (err) => {
-        if (err) {
-            const errMsg = err.message === "SQLITE_CONSTRAINT: UNIQUE constraint failed: players.UID"
-                ? "You are already registered."
-                : "Error. Please notify an admin.";
-            return common.say(message, `*${err.message}*\n${errMsg}`);
-        } else {
-            common.say(message, `Database updated. Welcome to the rankings ${username}.`)
-        }
-    });
-    db.close();
 }
 
 async function updateTable(message, p1uid, p2uid, p1Score, p2Score){
@@ -85,4 +67,23 @@ module.exports.prediction = async (message) => {
     const p1Elo = await getPlayerElo(message.mentions.users.array()[0].id);
     const p2Elo = await getPlayerElo(message.mentions.users.array()[1].id);
     common.say(message, `<@${message.mentions.users.array()[0].id}> (${p1Elo}) has ${100*getChanceToWin(p1Elo, p2Elo)}% to win versus <@${message.mentions.users.array()[1].id}> (${p2Elo}).`)
+}
+
+
+module.exports.registerUser = (message) => {
+    const db = common.connect();
+    let discordID = message.author.id;
+    let username = message.author.username;
+
+    db.all('INSERT INTO players VALUES(?,?,?,?,?,?,?,?,?,?)', [discordID, username, 0, 0, 0, 0, 1500, 0, 0, 0], (err) => {
+        if (err) {
+            const errMsg = err.message === "SQLITE_CONSTRAINT: UNIQUE constraint failed: players.UID"
+                ? "You are already registered."
+                : "Error. Please notify an admin.";
+            return common.say(message, `*${err.message}*\n${errMsg}`);
+        } else {
+            common.say(message, `Database updated. Welcome to the rankings ${username}.`)
+        }
+    });
+    db.close();
 }
