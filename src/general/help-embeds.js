@@ -87,8 +87,8 @@ module.exports.miscHelp = (message) => {
                 name: `${config.prefix}guide - ${isEnabled(config.guide)}`,
                 value: `Shows some of the player written guides.\nExample Usage: ${config.prefix}guide`
             }, {
-                name: `${config.prefix}image - ${isEnabled(config.image)}`,
-                value: `Returns a random stored image. \nExample Usage: ${config.prefix}image`
+                name: `${config.prefix}random - ${isEnabled(config.image)}`,
+                value: `Returns a random game of the size specified. \nExample Usage: ${config.prefix}random 4v4`
             }]
         }
     });

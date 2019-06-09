@@ -13,7 +13,6 @@ const bot = new Discord.Client();
 function findCommand(message, command) {
 	let input = message.content.substr(message.content.indexOf(' ') + 1);
 	input = input.split(/,/);
-
 	for (index in input) {
 		input[index] = input[index]
 			.replace(/&/g, '&amp;')

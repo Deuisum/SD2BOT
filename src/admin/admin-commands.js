@@ -39,8 +39,8 @@ module.exports.createTables = (message) => {
             else { message.channel.send("'blacklistTable' table created if it doesn't exist.") }
         });
     })
-
-    for (map in common.maps) {
+    const maps = {...common.maps1v1, ...common.maps2v2, ...common.maps3v3, ...common.maps4v4 }
+    for (map in maps) {
         db.run('INSERT INTO mapResults VALUES(?,?,?)', [map, 0, 0], (err) => {
             if (err) { console.log(err); }
         });

@@ -112,20 +112,20 @@ module.exports.random = (message, input) => {
     
     const table = new AsciiTable(`Random ${input} game`);
     table.setHeading('Allies', 'Axis');
-
-    //TODO CHANGE THIS TO LIMIT THE MAPS THAT CAN BE SELECTED
-    // if(largestInput >= 4)
-	// {
-	// 	table.setHeading('Map : ',printMap(message, common.maps.length));
-	// } 
-	// else 
-	// {
-	// 	table.setHeading('Map : ', printMap(message, common.maps.length));
-    // }
-
-    const map = maps.printMap(common.maps.length);
+    let map;
+    if(largestInput === 1){
+        map = maps.pickUnbannedMap(common.maps1v1)
+    }
+    if(largestInput === 2){
+        map = maps.pickUnbannedMap(common.maps2v2)
+    }
+    if(largestInput === 3){
+        map = maps.pickUnbannedMap(common.maps3v3)
+    }
+    if(largestInput >= 4){
+        map = maps.pickUnbannedMap(common.maps4v4)
+    }
     table.setHeading('Map : ', map);
-
     let alliesInput = '';
 	let axisInput = '';
 	for(i = 1; i <= largestInput; i++)
