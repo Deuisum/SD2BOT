@@ -9,12 +9,12 @@ This bot is fan made and has no affiliation with Eugen Systems.
 ✔ Map Commands
 ✔ Misc Commands
 ✔ Move common functions to the same file
-✖ Random Game Command
-✖ Help Command
-✖ Template Command
-✖ Admin Commands
+✔ Random Game Command
+✔ Help Command
+✔ Template Command
+✔ Admin Commands
 ✖ Logging (General)
-✖ Results Logging 
+~ Results Logging 
 ✖ Results Querying
 ✖ How to install/run in README
 
