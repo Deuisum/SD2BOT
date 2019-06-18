@@ -97,10 +97,10 @@ module.exports.allies = {
     "26th Guards": true,
     "44th Guards": true,
     "184th Guards": true,
-    "3rd Armoured": true,
-    "3rd Canadian": true,
-    "15th Scottish": true,
-    "frenchies": true, 
+    "3rd US Armoured": true,
+    "3rd Canadian Infantry": true,
+    "15th Infantry": true,
+    "2e Blindee": true,
 }
 
 module.exports.axis = {
@@ -119,15 +119,54 @@ module.exports.axis = {
     "352 Infantry": true,
 }
 
-module.exports.maps = {
-    "Orsha North": true,
-    "Vitebsk East": true,
-    "Tsel": true,
-    "Lyakhavichy": true,
-    "Autobahn Zur Holle": true,
+module.exports.maps1v1 = {
+    "Bobr": true,
+    "Haroshaje": true,
+    "Krupa": true,
+    "Lenina1": true,
     "Orsha East": true,
+    "Orsha North": true,
+    "Ostrowno1": true,
+    "Shchedrin1": true,
+    "Sianno": true,
+    "Slutsk East": true,
+    "Slutsk West": true,
+    "Slutsk1": true,
+    "Tsel": true
+}
+
+module.exports.maps2v2 = {
+    "Autobahn Zur Holle": true,
     "Beshankovichy": true,
+    "Bobrujsk West": true,
+    "Lenina2": true,
+    "Losnica": true,
+    "Novka": true,
+    "Ostrowno2": true,
+    "Shchedrin2": true,
+    "Slutsk2": true,
+    "Veselovo": true,
+    "Vitebsk East": true,
+}
+
+module.exports.maps3v3 = {
+    "Krupki": true,
+    "Lenina3": true,
+    "Lipen": true,
+    "Lyakhavichy": true,
+    "Mogilev": true,
     "Naratch Lake": true,
-    "Shchedrin": true
-};
+    "Ostrowno3": true,
+    "Pleshchenitsy South": true,
+    "Shchedrin3": true,
+    "Slutsk3": true,
+    "Smolyany": true,
+}
+
+module.exports.maps4v4 = {
+    "Lenina4": true,
+    "Ostrowno4": true,
+    "Shchedrin4": true,
+    "Slutsk4": true
+}
 

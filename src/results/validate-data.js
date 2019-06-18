@@ -45,13 +45,14 @@ module.exports.validateResults = async (message) => {
     await verifyPlayers();
     await verifyPlayedDivs();
     validateMissingInputs();
+    console.log(resultStateObject)
     if (resultStateObject.error) {
         const concatErrText = resultStateObject.errorText.join("\n")
         common.say(message, concatErrText);
         return;
     }
 
-    if(!resultStateObject.isDraw){
+    if (!resultStateObject.isDraw) {
         winnerAndLoserDivs();
     }
     return resultStateObject;
@@ -113,7 +114,7 @@ function verifyPlayedDivs() {
         if (!common.allies.hasOwnProperty(i) && !common.axis.hasOwnProperty(i)) {
             resultStateObject.error = true;
             resultStateObject.errorText.push(`Unknown division at **${i}** did you mean **${common.lexicalGuesser(i, { ...common.allies, ...common.axis })}**?`)
-        } 
+        }
     })
 }
 
@@ -161,7 +162,8 @@ function getMapInfo(input) {
         if (element.match(/(map:)/gi)) {
             let map = element.replace(/^.+:/, '').replace("<", "").replace(">", "").replace("@", "").replace("!", "").trim();
             map = common.alterUserInput(map);
-            if (common.maps.hasOwnProperty(map)) {
+            const maps = { ...common.maps1v1, ...common.maps2v2, ...common.maps3v3, ...common.maps4v4 }
+            if (maps.hasOwnProperty(map)) {
                 resultStateObject.hasMapPlayed = true;
                 resultStateObject.mapPlayed = map;
             } else {
@@ -199,8 +201,8 @@ function getBans(input) {
     })
 }
 
-function winnerAndLoserDivs(){
-    if(resultStateObject.winnerName == resultStateObject.playerNames[0]){
+function winnerAndLoserDivs() {
+    if (resultStateObject.winnerName == resultStateObject.playerNames[0]) {
         resultStateObject.winnerDiv = resultStateObject.playerDivs[0]
         resultStateObject.loserDiv = resultStateObject.playerDivs[1]
     } else {
@@ -253,13 +255,13 @@ function validateMissingInputs() {
         resultStateObject.error = true;
         resultStateObject.errorText.push(`\nMissing required line \`P2 Div:\`, please use ${config.prefix} template to request a template to fill in.`);
     }
-    if(resultStateObject.loserName.match(/[^0-9]/gi) || resultStateObject.winnerName.match(/[^0-9]/gi)){
+    if (resultStateObject.loserName.match(/[^0-9]/gi) || resultStateObject.winnerName.match(/[^0-9]/gi)) {
         resultStateObject.error = true;
-        resultStateObject.errorText.push('\nUnknown characters in Winner/Loser.')
+        resultStateObject.errorText.push('\nUnknown item in Winner/Loser.')
     }
-    if(resultStateObject.playerNames[0].match(/[^0-9]/gi) || resultStateObject.playerNames[1].match(/[^0-9]/gi)){
+    if (resultStateObject.playerNames[0].match(/[^0-9]/gi) || resultStateObject.playerNames[1].match(/[^0-9]/gi)) {
         resultStateObject.error = true;
-        resultStateObject.errorText.push('\nUnknown characters in P1/P2 Names.')
+        resultStateObject.errorText.push('\nUnknown item in P1/P2 Names.')
     }
 }
 

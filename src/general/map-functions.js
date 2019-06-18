@@ -49,22 +49,28 @@ module.exports.allMaps = (message) => {
 }
 
 module.exports.rmap = rmap = (message, input = "") => {
+    let map;
     switch (input) {
         case "1v1":
-            const map = pickUnbannedMap(common.maps1v1)
-            message.reply(map, { file: `./general/images/${map}.jpg` });
+            map = pickUnbannedMap(common.maps1v1)
             break;
         case "2v2":
-            common.reply(message, pickUnbannedMap(common.maps2v2));
+            map = pickUnbannedMap(common.maps2v2)
             break;
         case "3v3":
-            common.reply(message, pickUnbannedMap(common.maps3v3));
+            map = pickUnbannedMap(common.maps3v3)
             break;
         case "4v4":
-            common.reply(message, pickUnbannedMap(common.maps4v4));
+            map = pickUnbannedMap(common.maps4v4)
+
             break;
         default:
             common.reply(message, `Unknown input size input.\nPicking from all maps: ${pickUnbannedMap({ ...common.maps1v1, ...common.maps2v2, ...common.maps3v3, ...common.maps4v4 })}`)
+    }
+    if (map === "No valid maps to pick from.") {
+        message.reply("error. All maps of this size have been banned.")
+    } else {
+        message.reply(map, { file: `./general/images/${map}.jpg` });
     }
 }
 
@@ -79,7 +85,7 @@ module.exports.banning_unbanningMaps = (message, msgInput, unbanBool) => {
             if (msgInput[index] === `${config.prefix}banmap`) {
                 common.say(message, `Please state a map, use ${config.prefix}allmaps, to get the list of maps.`)
             } else {
-                common.say(message, `I don't know what that map is, did you mean ***${common.lexicalGuesser(msgInput[index], allMaps)}*** instead of ***${msgInput[index]}***.`)
+                common.say(message, `I don't know what that map is, did you mean ***${common.lexicalGuesser(msgInput[index], allMaps)}*** instead of ***${msgInput[index]}***.\nNo maps have been banned.`)
             }
         }
     })
@@ -132,10 +138,6 @@ module.exports.banning_unbanningMaps = (message, msgInput, unbanBool) => {
 module.exports.bannedMaps = bannedMaps = (message) => {
     const table = new AsciiTable('');
     table.setHeading('1v1 Maps', 'Banned?', '2v2 Maps', 'Banned?', '3v3 Maps', 'Banned?', '4v4 Maps', 'Banned?');
-    // table.setHeadingAlign(AsciiTable.CENTER);
-
-    // console.log(Object.entries(common.maps2v2))
-
     for (let i = 0; i < 13; i++) { //13 is max number of items in the 4 objects
         let maps1 = Object.entries(common.maps1v1)[i];
         let maps2 = Object.entries(common.maps2v2)[i];
@@ -152,18 +154,18 @@ module.exports.bannedMaps = bannedMaps = (message) => {
 
 module.exports.resetMaps = (message) => {
     for (key in common.maps1v1) {
-        common.maps[key] = true;
+        common.maps1v1[key] = true;
     }
     for (key in common.maps2v2) {
-        common.maps[key] = true;
+        common.maps2v2[key] = true;
     }
     for (key in common.maps3v3) {
-        common.maps[key] = true;
+        common.maps3v3[key] = true;
     }
     for (key in common.maps4v4) {
-        common.maps[key] = true;
+        common.maps4v4[key] = true;
     }
-    message.channel.send("Map pool reset.");
+    message.channel.reply("Map pool reset.");
 }
 
 

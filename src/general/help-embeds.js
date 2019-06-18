@@ -1,8 +1,9 @@
 const common = require("./common");
 const config = require("../config");
 
-module.exports.mapHelp = (message) => {
-    message.channel.send({
+module.exports.mapHelp = async (message) => {
+    const dm = await message.author.createDM();
+    dm.send({
         embed: {
             color: 3447003,
             author: {
@@ -14,16 +15,16 @@ module.exports.mapHelp = (message) => {
                 value: `Returns a random map of a certain size. \nExample Usage: ${config.prefix}rmap 2v2`
             }, {
                 name: `${config.prefix}maps | ${config.prefix}allmaps - ${isEnabled(config.allMaps)}`,
-                value: "Gives help info about admin commands."
+                value: `Returns a list of all the maps seperated by size. \nExample usage ${config.prefix}maps`
             }, {
                 name: `${config.prefix}bannedmaps - ${isEnabled(config.mapBans)}`,
                 value: `Returns a list of banned maps. \nExample Usage: ${config.prefix}bannedmaps`
             }, {
                 name: `${config.prefix}banmap - ${isEnabled(config.mapBans)}`,
-                value: `Ban a map or multiple maps. \nExample Usage: ${config.prefix}banmap ${Object.keys(common.maps)[0]}, ${Object.keys(common.maps)[1]}`
+                value: `Ban a map or multiple maps. \nExample Usage: ${config.prefix}banmap ${Object.keys(common.maps1v1)[0]}, ${Object.keys(common.maps1v1)[1]}`
             }, {
                 name: `${config.prefix}unbanmap - ${isEnabled(config.mapBans)}`,
-                value: `Unbans a map or multiple maps. \nExample Usage: ${config.prefix}unbanmap ${Object.keys(common.maps)[0]}, ${Object.keys(common.maps)[1]}`
+                value: `Unbans a map or multiple maps. \nExample Usage: ${config.prefix}unbanmap ${Object.keys(common.maps1v1)[0]}, ${Object.keys(common.maps1v1)[1]}`
             }, {
                 name: `${config.prefix}resetmaps - ${isEnabled(config.mapBans)}`,
                 value: `Reset all the banned maps. \nExample Usage: ${config.prefix}resetmaps`
@@ -32,8 +33,9 @@ module.exports.mapHelp = (message) => {
     });
 }
 
-module.exports.divHelp = (message) => {
-    message.channel.send({
+module.exports.divHelp = async (message) => {
+    const dm = await message.author.createDM();
+    dm.send({
         embed: {
             color: 3447003,
             author: {
@@ -41,11 +43,11 @@ module.exports.divHelp = (message) => {
                 icon_url: message.client.user.avatarURL
             },
             fields: [{
-                name: `${config.prefix}rmap - ${isEnabled(config.rdiv)}`,
+                name: `${config.prefix}rdiv - ${isEnabled(config.rdiv)}`,
                 value: `Returns a random div of a certain faction. \nExample Usage: ${config.prefix}rdiv allies`
             }, {
                 name: `${config.prefix}divs | ${config.prefix}alldivs - ${isEnabled(config.allDivs)}`,
-                value: "Gives help info about admin commands."
+                value: `Returns a list of all the divisions. \nExample usage ${config.prefix}divs`
             }, {
                 name: `${config.prefix}banneddivs - ${isEnabled(config.divBans)}`,
                 value: `Returns a list of banned divisions. \nExample Usage: ${config.prefix}banneddivs`
@@ -54,7 +56,7 @@ module.exports.divHelp = (message) => {
                 value: `Ban a division or multiple divisions. \nExample Usage: ${config.prefix}bandivs ${Object.keys(common.allies)[0]}, ${Object.keys(common.allies)[1]}`
             }, {
                 name: `${config.prefix}unbandiv - ${isEnabled(config.divBans)}`,
-                value: `Unbans a division or multiple divisions. \nExample Usage: ${config.prefix}unbanmap ${Object.keys(common.allies)[0]}, ${Object.keys(common.allies)[1]}`
+                value: `Unbans a division or multiple divisions. \nExample Usage: ${config.prefix}unbandiv ${Object.keys(common.allies)[0]}, ${Object.keys(common.allies)[1]}`
             }, {
                 name: `${config.prefix}resetdivs - ${isEnabled(config.divBans)}`,
                 value: `Reset all the banned divisions. \nExample Usage: ${config.prefix}resetdivs`
@@ -63,8 +65,9 @@ module.exports.divHelp = (message) => {
     });
 }
 
-module.exports.miscHelp = (message) => {
-    message.channel.send({
+module.exports.miscHelp = async (message) => {
+    const dm = await message.author.createDM();
+    dm.send({
         embed: {
             color: 3447003,
             author: {
@@ -87,15 +90,16 @@ module.exports.miscHelp = (message) => {
                 name: `${config.prefix}guide - ${isEnabled(config.guide)}`,
                 value: `Shows some of the player written guides.\nExample Usage: ${config.prefix}guide`
             }, {
-                name: `${config.prefix}random - ${isEnabled(config.image)}`,
+                name: `${config.prefix}random - ${isEnabled(config.random)}`,
                 value: `Returns a random game of the size specified. \nExample Usage: ${config.prefix}random 4v4`
             }]
         }
     });
 }
 
-module.exports.adminHelp = (message) => {
-    message.channel.send({
+module.exports.adminHelp = async (message) => {
+    const dm = await message.author.createDM();
+    dm.send({
         embed: {
             color: 3447003,
             author: {
@@ -117,13 +121,16 @@ module.exports.adminHelp = (message) => {
             }, {
                 name: `${config.prefix}removeAdmin - ${isEnabled(config.adminCommands)}`,
                 value: `Removes the users permission to use admin commands. \nExample Usage: ${config.prefix}removeAdmin @user`
+            }, {
+                name: `${config.prefix}listAdmins - ${isEnabled(config.adminCommands)}`,
+                value: `Lists admins that are known to the bot \nExample Usage: ${config.prefix}listadmins`
             }]
         }
     });
 }
 
-module.exports.tournyHelp = (message) => {
-    
+module.exports.tournyHelp = async (message) => {
+    const dm = await message.author.createDM();
 }
 
 function isEnabled(i) {

@@ -19,7 +19,6 @@ function findCommand(message, command) {
 			.replace(/"/g, '&quot;')
 			.trim();
 	}
-
 	switch (command) {
 		// Admin functions
 		case "blacklist":
@@ -47,16 +46,15 @@ function findCommand(message, command) {
 				? admin.removeAdmin(message)
 				: common.moduleDisabledMsg(message, 'admin');
 			break;
-		case "createtables":
+		case "listadmins":
 			config.adminCommands
-				? admin.createTables(message)
+				? admin.listAdmins(message)
 				: common.moduleDisabledMsg(message, 'admin');
 			break;
-		
 
 		// Misc functions
 		case "help":
-			config.help 
+			config.help
 				? misc.help(message, input[0])
 				: common.moduleDisabledMsg(message, 'help');
 			break;
@@ -92,19 +90,20 @@ function findCommand(message, command) {
 		case "nebelhandgranate":
 		case "hhl3":
 		case "fud":
+		case "potato":
 			config.piat_all
 				? misc.piat(message)
 				: common.moduleDisabledMsg(message, 'piat');
-			break;
-		case "image":
-			config.image 
-				? misc.image(message)
-				: common.moduleDisabledMsg(message, 'image');
 			break;
 		case "prediction":
 			config.prediction
 				? results.prediction(message)
 				: common.moduleDisabledMsg(message, 'results');
+			break;
+		case "template":
+			config.template
+				? misc.template(message)
+				: common.moduleDisabledMsg(message, 'template');
 			break;
 
 		// Map functions
@@ -140,10 +139,10 @@ function findCommand(message, command) {
 				: common.moduleDisabledMsg(message, 'map bans');
 			break;
 		case "random":
-			config.random 
-				? div.random(message, input) 
+			config.random
+				? div.random(message, input)
 				: common.moduleDisabledMsg(message, 'random');
-		break;
+			break;
 
 		// Div functions
 		case "rdiv":
@@ -191,23 +190,54 @@ function resultsCommands(message, command, bot) {
 			config.enterResults
 				? results.resultsMain(message, bot)
 				: common.moduleDisabledMsg(message, 'results')
+			break;
 	}
 }
 
 bot.on('message', message => {
 	if (message.content.startsWith(config.prefix)) {
-		const foo = (message.content.substr(1, message.content.length)).toLowerCase().replace(/\n/g," ").split(" ")
-		const command = foo[0];
-		//TODO this better
-		(command === "results" || command === "register")
-			? resultsCommands(message, command, bot)
-			: findCommand(message, command);
+		next(message);
 	}
 });
 
+async function next(message) {
+	const inputList = (message.content.substr(1, message.content.length)).toLowerCase().replace(/\n/g, " ").split(" ")
+	const command = inputList[0];
+
+	if (command === "createtables") {
+		admin.createTables(message);
+	}
+	let isBlackListed;
+	try {
+		isBlackListed = await admin.isBlackListed(message.author.id)
+	} catch (e) {
+		common.say(message, "Database tables do not exist. Administrators need to run the !createtables command.")
+	}
+	if (message.channel.type === "text") {
+		if (!isBlackListed) {
+			//TODO this better
+			(command === "results" || command === "register")
+				? resultsCommands(message, command, bot)
+				: findCommand(message, command);
+		}
+	} else if (message.channel.type === "dm") {
+		let input = message.content.substr(message.content.indexOf(' ') + 1);
+		input = input.split(/,/);
+		for (index in input) {
+			input[index] = input[index]
+				.replace(/&/g, '&amp;')
+				.replace(/"/g, '&quot;')
+				.trim();
+		}
+		if (command === "help") {
+			misc.help(message, input[0]);
+		}
+	}
+}
+
 bot.on('ready', () => {
 	console.log('Bot Online!');
-	bot.user.setActivity("Use " + config.prefix + "help to see commands!")
+	bot.user.setActivity("Use " + config.prefix + "help to see commands!", { type: "Listening" })
 });
 
 bot.on('error', console.error);
