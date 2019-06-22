@@ -1,227 +1,153 @@
-// const sqlite3 = require('sqlite3').verbose();
-// const config = require("./config");
-// const jsonfile = require('jsonfile');
-// const jsonObj = jsonfile.readFileSync("players.json");
+const common = require("../general/common");
 
-// function _commitResults(mapChosen,winnerName,winnerDiv,loserName,loserDiv,mapsBanned,divsBanned,isDraw,playerNamesIfDraw,divsIfDraw)
-// {
-//     if(isDraw)
-//     {
-//         gameDraw(playerNamesIfDraw,divsIfDraw)
-//     }
-//     else
-//     {
-//         gameNotDraw(winnerName,winnerDiv,loserName,loserDiv)
-//     }
+module.exports.enterData = async (obj) => {
+    if (obj.isDraw === true) {
+        await submitResultsDraw(obj);
+    } else {
+        await submitResults(obj)
+    }
+    await commonStuff(obj);
+}
 
-//     commitBans(mapsBanned,divsBanned);
+async function commonStuff(obj) {
+    //Map Pick
+    await common.sql('UPDATE mapResults SET Picks = Picks + 1 WHERE Name = ?', [obj.mapPlayed])
+        .catch((err) => {
+            console.log("Err1", err)
+        })
 
-//     updateOtherColumns(mapChosen,winnerName,winnerDiv,loserName,loserDiv,isDraw,playerNamesIfDraw,divsIfDraw);
-// }
+    //Bans
+    for (const element of obj.bannedDivs) {
+        await common.sql('UPDATE divResults SET Bans = Bans + 1 WHERE Name = ?', [element])
+            .catch((err) => {
+                console.log("Err2", err)
+            })
+    };
 
-// function gameDraw(playerNamesIfDraw,divsIfDraw)
-// {
-//     let playerOne = getUsernameFromID(playerNamesIfDraw[0]);   
-//     let playerTwo = getUsernameFromID(playerNamesIfDraw[1]);
-//     let divOne = divsIfDraw[0];
-//     let divTwo = divsIfDraw[1];
+    for (const element of obj.bannedMaps) {
+        await common.sql('UPDATE mapResults SET Bans = Bans + 1 WHERE Name = ?', [element])
+            .catch((err) => {
+                console.log("Err3", err)
+            })
+    };
 
-//     db = connect();
-//     db.serialize(function()
-//     {
-//         //Update player draws
-//         db.run('UPDATE players SET Draw = Draw + 1 WHERE name = ?', [playerOne], function(err)
-// 		{
-// 			if (err) { throw err; } 
-//         });
-        
-//         db.run('UPDATE players SET Draw = Draw + 1 WHERE name = ?', [playerTwo], function(err)
-// 		{
-// 			if (err) { throw err; } 
-//         });
-        
-//         //update divisions draws
-// 		db.run('UPDATE divResults SET Draw = Draw + 1 WHERE name = ?', [divOne], function(err)
-// 		{
-// 			if (err) { throw err; } 
-// 		});
+    //Update div picks
+    await common.sql('UPDATE divResults SET Picks = Picks + 1 WHERE Name = ?', [obj.playerDivs[0]])
+        .catch((err) => {
+            console.log("Err4", err)
+        })
+    await common.sql('UPDATE divResults SET Picks = Picks + 1 WHERE Name = ?', [obj.playerDivs[1]])
+        .catch((err) => {
+            console.log("Err5", err)
+        })
 
-// 		db.run('UPDATE divResults SET Draw = Draw + 1 WHERE name = ?', [divTwo], function(err)
-// 		{
-// 			if (err) { throw err; } 
-//         });
-//     })
-//     db.close();
-// }
+    //Update div win percent
+    await common.sql('UPDATE divResults SET WinPercent = CAST(Wins AS float)/(CAST(Wins AS float) + CAST(Draw AS float) + CAST(Loss AS float))*100 WHERE Name = ?', [obj.playerDivs[0]])
+        .catch((err) => {
+            console.log("Err6", err)
+        })
+    await common.sql('UPDATE divResults SET WinPercent = CAST(Wins AS float)/(CAST(Wins AS float) + CAST(Draw AS float) + CAST(Loss AS float))*100 WHERE Name = ?', [obj.playerDivs[1]])
+        .catch((err) => {
+            console.log("Err7", err)
+        })
 
-// function gameNotDraw(winnerName,winnerDiv,loserName,loserDiv)
-// {
-//     db = connect();
-//     db.serialize(function()
-//     {
-//         db.run('UPDATE players SET Wins = Wins + 1 WHERE name = ?', [getUsernameFromID(winnerName)], function(err)
-//         {
-//             if (err) { throw err; }
-//         });
+    //Update player win percent
+    await common.sql('UPDATE players SET WinPercent = CAST(Wins AS float)/(CAST(Wins AS float) + CAST(Draws AS float) + CAST(Losses AS float))*100 WHERE uid = ?', [obj.playerNames[0]])
+        .catch((err) => {
+            console.log("Err8", err)
+        })
+    await common.sql('UPDATE players SET WinPercent = CAST(Wins AS float)/(CAST(Wins AS float) + CAST(Draws AS float) + CAST(Losses AS float))*100 WHERE uid = ?', [obj.playerNames[1]])
+        .catch((err) => {
+            console.log("Err9", err)
+        })
 
-//         db.run('UPDATE players SET Loss = Loss + 1 WHERE name = ?', [getUsernameFromID(loserName)], function(err)
-//         {
-//             if (err) { throw err; } 
-//         });
+    const p1isAllies = common.allies.hasOwnProperty(obj.playerDivs[0])
+    const p2isAllies = common.allies.hasOwnProperty(obj.playerDivs[1])
 
-//         db.run('UPDATE divResults SET Wins = Wins + 1 WHERE name = ?', [winnerDiv], function(err)
-//         {
-//             if (err) { throw err; }
-//         });
+    if (p1isAllies) {
+        await common.sql('UPDATE players SET AlliesPlayed = AlliesPlayed + 1 WHERE uid = ?', [obj.playerNames[0]])
+            .catch((err) => {
+                console.log("Err", err)
+            })
+    } else {
+        await common.sql('UPDATE players SET AxisPlayed = AxisPlayed + 1 WHERE uid = ?', [obj.playerNames[0]])
+            .catch((err) => {
+                console.log("Err", err)
+            })
+    }
 
-//         db.run('UPDATE divResults SET Loss = Loss + 1 WHERE name = ?', [loserDiv], function(err)
-//         {
-//             if (err) { throw err; } 
-//         });
-//     })
-//     db.close();
-// }
+    if (p2isAllies) {
+        await common.sql('UPDATE players SET AlliesPlayed = AlliesPlayed + 1 WHERE uid = ?', [obj.playerNames[1]])
+            .catch((err) => {
+                console.log("Err", err)
+            })
+    } else {
+        await common.sql('UPDATE players SET AxisPlayed = AxisPlayed + 1 WHERE uid = ?', [obj.playerNames[1]])
+            .catch((err) => {
+                console.log("Err", err)
+            })
+    }
+}
 
-// function commitBans(mapsBanned,divsBanned)
-// {
-//     db = connect();
-//     //submit div bans
-// 	for (div in divsBanned)
-// 	{
-// 		db.serialize(function() 
-// 		{
-// 			db.run('UPDATE divResults SET Bans = Bans + 1 WHERE name = ?', [divsBanned[div]], function(err)
-// 			{
-// 				if (err) 
-// 				{
-// 		   			throw err;
-// 		  		} 
-// 			});
-// 		})
-// 	}
+async function submitResults(obj) {
+    console.log("aa")
+    //Players
+    await common.sql('UPDATE players SET Wins = Wins + 1 WHERE uid = ?', [obj.winnerName])
+        .catch((err) => {
+            console.log("Err", err)
+        })
+    await common.sql('UPDATE players SET Losses = Losses + 1 WHERE uid = ?', [obj.loserName])
+        .catch((err) => {
+            console.log("Err", err)
+        })
 
-// 	//submit map bans
-// 	for (map in mapsBanned)
-// 	{
-// 		db.serialize(function() 
-// 		{
-// 			db.run('UPDATE mapResults SET Bans = Bans + 1 WHERE name = ?', [mapsBanned[map]], function(err)
-// 			{
-// 				if (err) 
-// 				{
-// 		   			throw err;
-// 		  		} 
-// 			});
-// 		})
-//     }
-//     db.close();
-// }
+    //divs
+    await common.sql('UPDATE divResults SET Wins = Wins + 1 WHERE Name = ?', [obj.winnerDiv])
+        .catch((err) => {
+            console.log("Err", err)
+        })
+    await common.sql('UPDATE divResults SET Loss = Loss + 1 WHERE Name = ?', [obj.loserDiv])
+        .catch((err) => {
+            console.log("Err", err)
+        })
 
-// function updateOtherColumns(mapChosen,winnerName,winnerDiv,loserName,loserDiv,isDraw,playerNamesIfDraw,divsIfDraw)
-// {
-//     db = connect();
-//     let player1 = "";
-//     let player2 = "";
-//     let div1 = "";
-//     let div2 = "";
+    await common.sql('UPDATE players SET WinStreak = WinStreak + 1 WHERE UID = ?', [obj.winnerName])
+        .catch((err) => {
+            console.log("Err", err)
+        })
+    await common.sql('UPDATE players SET WinStreak = 0 WHERE UID = ?', [obj.loserName])
+        .catch((err) => {
+            console.log("Err", err)
+        })
+}
 
-//     if(isDraw)
-//     {
-//         player1 = getUsernameFromID(playerNamesIfDraw[0]);
-//         player2 = getUsernameFromID(playerNamesIfDraw[1]);
-//         div1 = divsIfDraw[0];
-//         div2 = divsIfDraw[1];
-//     } 
-//     else 
-//     {
-//         player1 = getUsernameFromID(winnerName);
-//         player2 = getUsernameFromID(loserName);
-//         div1 = winnerDiv;
-//         div2 = loserDiv;
-//     }
+async function submitResultsDraw(obj) {
+    //Players
+    await common.sql('UPDATE players SET Draws = Draws + 1 WHERE uid = ?', [obj.playerNames[0]])
+        .catch((err) => {
+            console.log("Err", err)
+        })
+    await common.sql('UPDATE players SET Draws = Draws + 1 WHERE uid = ?', [obj.playerNames[1]])
+        .catch((err) => {
+            console.log("Err", err)
+        })
 
-//     db.serialize(function()
-//     {
-//         //update win % of the players now
-// 		db.run('UPDATE players SET WinPercent = CAST(Wins AS float)/(CAST(Wins AS float) + CAST(Draw AS float) + CAST(Loss AS float))*100 WHERE name = ?', [player1], function(err)
-// 		{
-//             if (err) { throw err; } 
-// 		});
+    //divs
+    await common.sql('UPDATE divResults SET Draws = Draws + 1 WHERE Name = ?', [obj.playerDivs[0]])
+        .catch((err) => {
+            console.log("Err", err)
+        })
+    await common.sql('UPDATE divResults SET Draws = Draws + 1 WHERE Name = ?', [obj.playerDivs[0]])
+        .catch((err) => {
+            console.log("Err", err)
+        })
 
-// 		db.run('UPDATE players SET WinPercent = CAST(Wins AS float)/(CAST(Wins AS float) + CAST(Draw AS float) + CAST(Loss AS float))*100 WHERE name = ?', [player2], function(err)
-// 		{
-//             if (err) { throw err; } 
-//         });
-
-//         //update player total points
-//         db.run('UPDATE players SET TotalPoints = Wins*3 + Draw WHERE name = ?', [player1], function(err)
-// 		{
-//             if (err) { throw err; }
-//         });
-
-//         db.run('UPDATE players SET TotalPoints = Wins*3 + Draw WHERE name = ?', [player2], function(err)
-// 		{
-//             if (err) { throw err; }
-// 		});
-
-//         //Update Win percentage of the divisions
-// 		db.run('UPDATE divResults SET WinPercent = CAST(Wins AS float)/(CAST(Wins AS float) + CAST(Draw AS float) + CAST(Loss AS float))*100 WHERE name = ?', [div1], function(err)
-// 		{
-// 			if (err) { throw err; }
-// 		});
-
-// 		db.run('UPDATE divResults SET WinPercent = CAST(Wins AS float)/(CAST(Wins AS float) + CAST(Draw AS float) + CAST(Loss AS float))*100 WHERE name = ?', [div2], function(err)
-// 		{
-//             if (err) { throw err; }
-//         });
-        
-//         //Update what map was played on 
-//         db.run('UPDATE mapResults SET Picks = Picks + 1 WHERE name = ?', [mapChosen], function(err)
-// 		{
-//             if (err) { throw err; }
-//         });
-        
-//         //now update the pick that were picked
-//         db.run('UPDATE divResults SET Picks = Picks + 1 WHERE name = ?', [div1], function(err)
-// 		{
-// 			if (err) { throw err; }
-// 		});
-
-// 		db.run('UPDATE divResults SET Picks = Picks + 1 WHERE name = ?', [div2], function(err)
-// 		{
-// 			if (err) { throw err; }
-//         });
-//     })
-//     db.close();
-// }
-
-
-// //Creates a connection to the results database
-// //calling this method MUST be paired with a 'db.close();' in the same method
-// function connect()
-// {
-// 	var db = new sqlite3.Database('./resultsDB.db', (err) => {
-//   		if (err) 
-//   		{
-//     		console.error(err.message);
-//   		}
-// 	});
-// 	return db;
-// }
-
-// //returns the users name from an ID
-// function getUsernameFromID(user)
-// {
-// 	user = user.replace(/" "/g,"");
-// 	for(var i = 0, len = jsonObj.users.length; i < len; i++) 
-// 	{
-// 		if(user == jsonObj.users[i].discordID)
-// 		{
-// 			return jsonObj.users[i].username;
-// 		} 
-// 	}
-// }
-
-// module.exports = {
-//     commitResults: _commitResults
-// }
+    await common.sql('UPDATE players SET WinStreak = 0 WHERE UID = ?', [obj.playerNames[0]])
+        .catch((err) => {
+            console.log("Err", err)
+        })
+    await common.sql('UPDATE players SET WinStreak = 0 WHERE UID = ?', [obj.playerNames[1]])
+        .catch((err) => {
+            console.log("Err", err)
+        })
+}

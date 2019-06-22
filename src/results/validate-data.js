@@ -45,7 +45,6 @@ module.exports.validateResults = async (message) => {
     await verifyPlayers();
     await verifyPlayedDivs();
     validateMissingInputs();
-    console.log(resultStateObject)
     if (resultStateObject.error) {
         const concatErrText = resultStateObject.errorText.join("\n")
         common.say(message, concatErrText);
@@ -225,7 +224,7 @@ function isDraw(input) {
 function validateMissingInputs() {
     if (!resultStateObject.hasOutcome) {
         resultStateObject.error = true;
-        resultStateObject.errorText.push(`\nMissing required line \`Outcome:\`, please use ${config.prefix} template to request a template to fill in`);
+        resultStateObject.errorText.push(`\nMissing required line \`Draw: Yes\` or \`Draw: No\`, please use ${config.prefix} template to request a template to fill in`);
     }
     if (!resultStateObject.hasMapPlayed) {
         resultStateObject.error = true;

@@ -8,27 +8,33 @@ module.exports.resultsMain = async (message, client) => {
     if (obj === undefined) {
         return;
     }
-    // enter.enterData(obj);
+    enter.enterData(obj);
 
-    //hardcoded now to test, will change later
-    // await updatePlayersElo(message, obj.winnerName, obj.loserName,"p1win")
+
+    if (obj.isDraw) {
+        await updatePlayersElo(message, obj.winnerName, obj.loserName, "draw")
+    } else if (obj.winnerName === obj.playerNames[0]) {
+        await updatePlayersElo(message, obj.playerNames[0], obj.playerNames[1], "p1win")
+    } else if (obj.winnerName === obj.playerNames[1]) {
+        await updatePlayersElo(message, obj.playerNames[0], obj.playerNames[1], "p2win")
+    }
 }
 
-async function updatePlayersElo(message, p1uid, p2uid, outcome){
-    switch(outcome){
+async function updatePlayersElo(message, p1uid, p2uid, outcome) {
+    switch (outcome) {
         case "p1win":
             await updateTable(message, p1uid, p2uid, 1, 0);
             break;
         case "p2win":
             await updateTable(message, p1uid, p2uid, 0, 1)
             break;
-        case "p1win":
+        case "draw":
             await updateTable(message, p1uid, p2uid, 0.5, 0.5)
             break;
     }
 }
 
-async function updateTable(message, p1uid, p2uid, p1Score, p2Score){
+async function updateTable(message, p1uid, p2uid, p1Score, p2Score) {
     const p1Elo = await getPlayerElo(p1uid);
     const p2Elo = await getPlayerElo(p2uid);
     const newP1Elo = p1Elo + config.k_value * (p1Score - getChanceToWin(p1Elo, p2Elo))
@@ -44,29 +50,29 @@ async function updateTable(message, p1uid, p2uid, p1Score, p2Score){
             console.log(e)
         })
 
-    const p1EloChange = newP1Elo-p1Elo;
-    const p2EloChange = newP2Elo-p2Elo;    
-    common.say(message, `<@${p1uid}> Updated ELO: ${newP1Elo.toFixed(2)} (${p1EloChange < 0 ? '':'+'}${p1EloChange.toFixed(2)})
-<@${p2uid}> Updated ELO: ${newP2Elo.toFixed(2)} (${p2EloChange < 0 ? '':'+'}${p2EloChange.toFixed(2)})`)
+    const p1EloChange = newP1Elo - p1Elo;
+    const p2EloChange = newP2Elo - p2Elo;
+    common.say(message, `<@${p1uid}> Updated ELO: ${newP1Elo.toFixed(2)} (${p1EloChange < 0 ? '' : '+'}${p1EloChange.toFixed(2)})
+<@${p2uid}> Updated ELO: ${newP2Elo.toFixed(2)} (${p2EloChange < 0 ? '' : '+'}${p2EloChange.toFixed(2)})`)
 }
 
-function getChanceToWin(a, b){
-    return (1/(1 + Math.pow(10, ((b - a)/400)))).toFixed(2);
+function getChanceToWin(a, b) {
+    return (1 / (1 + Math.pow(10, ((b - a) / 400)))).toFixed(2);
 }
 
-async function getPlayerElo(uid){
+async function getPlayerElo(uid) {
     const elo = await common.sql(`SELECT elo FROM players WHERE UID = "${uid}"`)
     return Object.values(elo.id[0])[0];
 }
 
 module.exports.prediction = async (message) => {
-    if(message.mentions.users.size != 2){
+    if (message.mentions.users.size != 2) {
         common.reply(message, "Error in input. Please try again.")
-        return; 
+        return;
     }
     const p1Elo = await getPlayerElo(message.mentions.users.array()[0].id);
     const p2Elo = await getPlayerElo(message.mentions.users.array()[1].id);
-    common.say(message, `<@${message.mentions.users.array()[0].id}> (${p1Elo}) has ${100*getChanceToWin(p1Elo, p2Elo)}% to win versus <@${message.mentions.users.array()[1].id}> (${p2Elo}).`)
+    common.say(message, `<@${message.mentions.users.array()[0].id}> (${p1Elo}) has ${100 * getChanceToWin(p1Elo, p2Elo)}% to win versus <@${message.mentions.users.array()[1].id}> (${p2Elo}).`)
 }
 
 

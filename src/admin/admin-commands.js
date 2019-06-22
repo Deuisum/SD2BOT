@@ -19,7 +19,7 @@ async function hasPermission(message, id) {
 module.exports.createTables = async (message) => {
     if (message.member.hasPermission('ADMINISTRATOR')) {
         const db = common.connect();
-        const sqlPlayer = "CREATE TABLE IF NOT EXISTS players(UID text PRIMARY KEY, Name text NOT NULL, Wins integer NOT NULL, Draws integer NOT NULL, Losses integer NOT NULL, WinPercent integer NOT NULL, Elo integer NOT NULL, AlliesPercent integer NOT NULL, AxisPercent integer NOT NULL, WinStreak integer NOT NULL)";
+        const sqlPlayer = "CREATE TABLE IF NOT EXISTS players(UID text PRIMARY KEY, Name text NOT NULL, Wins integer NOT NULL, Draws integer NOT NULL, Losses integer NOT NULL, WinPercent integer NOT NULL, Elo integer NOT NULL, AlliesPlayed integer NOT NULL, AxisPlayed integer NOT NULL, WinStreak integer NOT NULL)";
         const sqlDivs = "CREATE TABLE IF NOT EXISTS divResults(Name text PRIMARY KEY, Wins integer NOT NULL, Draw integer NOT NULL, Loss integer NOT NULL, WinPercent integer NOT NULL, Picks integer NOT NULL, Bans integer NOT NULL)";
         const sqlMaps = "CREATE TABLE IF NOT EXISTS mapResults(Name text PRIMARY KEY, Picks integer NOT NULL, Bans integer NOT NULL)"
         const blacklistTable = "CREATE TABLE IF NOT EXISTS blacklist(blockedUID integer PRIMARY KEY, blockedName text NOT NULL, date text NOT NULL)"

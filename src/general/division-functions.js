@@ -10,7 +10,9 @@ module.exports.rdiv = rdiv = (message, input, isRandom) => {
         return;
     }
     let divs = '';
-    side.trim() === "axis" ? divs = common.axis : divs = common.allies;
+    side === "axis"
+        ? divs = common.axis
+        : divs = common.allies;
     const notBannedList = Object.keys(divs).filter(x => { return divs[x] });
     const rndDiv = Math.floor(Math.random() * notBannedList.length);
     if (isRandom) {
@@ -94,7 +96,7 @@ module.exports.resetDivs = (message) => {
     for (key in common.allies) {
         common.allies[key] = true;
     }
-    message.channel.send("Map pool reset.");
+    message.channel.send("Division pool reset.");
 }
 
 module.exports.random = (message, input) => {
@@ -140,7 +142,7 @@ module.exports.random = (message, input) => {
     table.setHeading(`Map : ${map}`, '');
     let alliesInput = '';
     let axisInput = '';
-    for (i = 1; i <= largestInput; i++) {
+    for (let i = 1; i <= largestInput; i++) {
         alliesInput = 'N/A';
         axisInput = 'N/A';
         if (i <= allies) {

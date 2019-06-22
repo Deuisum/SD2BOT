@@ -97,7 +97,7 @@ module.exports.help = async (message, input) => {
 }
 
 module.exports.template = (message) => {
-    message.channel.send("Minimum results submission:\n```" + config.prefix + "results\nnDraw: No\nWinner:\nLoser:\nMap:\n--------\nP1 Name:\nP1 Div:\n--------\nP2 Name:\nP2 Div:```");
+    message.channel.send("Minimum results submission:\n```" + config.prefix + "results\nDraw: No\nWinner:\nLoser:\nMap:\n--------\nP1 Name:\nP1 Div:\n--------\nP2 Name:\nP2 Div:```");
     message.channel.send("Minimum draw submission:\n```" + config.prefix + "results\nDraw: Yes\nMap:\n--------\nP1 Name:\nP1 Div:\n--------\nP2 Name:\nP2 Div:```");
 }
 
