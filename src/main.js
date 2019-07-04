@@ -211,7 +211,9 @@ async function next(message) {
 	try {
 		isBlackListed = await admin.isBlackListed(message.author.id)
 	} catch (e) {
-		common.say(message, "Database tables do not exist. Administrators need to run the !createtables command.")
+		if (command !== "createtables") {
+			common.say(message, "Database tables do not exist. Administrators need to run the !createtables command.")
+		}
 	}
 	if (message.channel.type === "text") {
 		if (!isBlackListed) {

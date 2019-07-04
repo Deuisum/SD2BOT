@@ -90,14 +90,15 @@ module.exports.connect = connect = () => {
 module.exports.allies = {
     "2nd Guards": true,
     "29th Tank Corps": true,
-    "3rd Guards": true,
+    "3rd Guards Tank": true,
+    "3rd Guards Mech": true,
     "Group Tyurin": true,
     "Group Bezugly": true,
     "9th Guards": true,
     "26th Guards": true,
     "44th Guards": true,
     "184th Guards": true,
-    "3rd US Armoured": true,
+    "3rd Us Armoured": true,
     "3rd Canadian Infantry": true,
     "15th Infantry": true,
     "2e Blindee": true,
@@ -117,6 +118,7 @@ module.exports.axis = {
     "Pz Lehr": true,
     "116 Panzer": true,
     "352 Infantry": true,
+    "1 Skijager": true,
 }
 
 module.exports.maps1v1 = {

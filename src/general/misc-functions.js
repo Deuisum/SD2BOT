@@ -105,7 +105,7 @@ module.exports.template = (message) => {
 module.exports.piat = (message) => {
     const i = Math.random();
     if (rateLimiter()) {
-        if (i > 0.95) {
+        if (i > 0.98) {
             common.reply(message, sodbotReplies[Math.floor(Math.random() * sodbotReplies.length)], true)
         } else if (i < 0.01) {
             specialPiat(message)

@@ -9,8 +9,7 @@ module.exports.resultsMain = async (message, client) => {
         return;
     }
     enter.enterData(obj);
-
-
+    message.channel.send("Results submitted.")
     if (obj.isDraw) {
         await updatePlayersElo(message, obj.winnerName, obj.loserName, "draw")
     } else if (obj.winnerName === obj.playerNames[0]) {

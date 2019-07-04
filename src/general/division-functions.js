@@ -16,9 +16,9 @@ module.exports.rdiv = rdiv = (message, input, isRandom) => {
     const notBannedList = Object.keys(divs).filter(x => { return divs[x] });
     const rndDiv = Math.floor(Math.random() * notBannedList.length);
     if (isRandom) {
-        return Object.keys(divs)[rndDiv];
+        return notBannedList[rndDiv];
     } else {
-        common.reply(message, Object.keys(divs)[rndDiv]);
+        common.reply(message, notBannedList[rndDiv]);
     }
 }
 

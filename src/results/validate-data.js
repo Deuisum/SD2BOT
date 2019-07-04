@@ -224,35 +224,35 @@ function isDraw(input) {
 function validateMissingInputs() {
     if (!resultStateObject.hasOutcome) {
         resultStateObject.error = true;
-        resultStateObject.errorText.push(`\nMissing required line \`Draw: Yes\` or \`Draw: No\`, please use ${config.prefix} template to request a template to fill in`);
+        resultStateObject.errorText.push(`\nMissing required line \`Draw: Yes\` or \`Draw: No\`, please use ${config.prefix}template to request a template to fill in`);
     }
     if (!resultStateObject.hasMapPlayed) {
         resultStateObject.error = true;
-        resultStateObject.errorText.push(`\nMissing required line \`Map Played:\`, please use ${config.prefix} template to request a template to fill in.`);
+        resultStateObject.errorText.push(`\nMissing required line \`Map Played:\`, please use ${config.prefix}template to request a template to fill in.`);
     }
     if (!resultStateObject.hasWinner) {
         resultStateObject.error = true;
-        resultStateObject.errorText.push(`\nMissing required line \`Winner:\`, please use ${config.prefix} template to request a template to fill in.`);
+        resultStateObject.errorText.push(`\nMissing required line \`Winner:\`, please use ${config.prefix}template to request a template to fill in.`);
     }
     if (!resultStateObject.hasLoser) {
         resultStateObject.error = true;
-        resultStateObject.errorText.push(`\nMissing required line \`Loser:\`, please use ${config.prefix} template to request a template to fill in.`);
+        resultStateObject.errorText.push(`\nMissing required line \`Loser:\`, please use ${config.prefix}template to request a template to fill in.`);
     }
     if (!resultStateObject.hasPlayerOne) {
         resultStateObject.error = true;
-        resultStateObject.errorText.push(`\nMissing required line \`P1 Name:\`, please use ${config.prefix} template to request a template to fill in.`);
+        resultStateObject.errorText.push(`\nMissing required line \`P1 Name:\`, please use ${config.prefix}template to request a template to fill in.`);
     }
     if (!resultStateObject.hasPlayerTwo) {
         resultStateObject.error = true;
-        resultStateObject.errorText.push(`\nMissing required line \`P2 Name:\`, please use ${config.prefix} template to request a template to fill in.`);
+        resultStateObject.errorText.push(`\nMissing required line \`P2 Name:\`, please use ${config.prefix}template to request a template to fill in.`);
     }
     if (!resultStateObject.hasPlayerOneDiv) {
         resultStateObject.error = true;
-        resultStateObject.errorText.push(`\nMissing required line \`P1 Div:\`, please use ${config.prefix} template to request a template to fill in.`);
+        resultStateObject.errorText.push(`\nMissing required line \`P1 Div:\`, please use ${config.prefix}template to request a template to fill in.`);
     }
     if (!resultStateObject.hasPlayerTwoDiv) {
         resultStateObject.error = true;
-        resultStateObject.errorText.push(`\nMissing required line \`P2 Div:\`, please use ${config.prefix} template to request a template to fill in.`);
+        resultStateObject.errorText.push(`\nMissing required line \`P2 Div:\`, please use ${config.prefix}template to request a template to fill in.`);
     }
     if (resultStateObject.loserName.match(/[^0-9]/gi) || resultStateObject.winnerName.match(/[^0-9]/gi)) {
         resultStateObject.error = true;

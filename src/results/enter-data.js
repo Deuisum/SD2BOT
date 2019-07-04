@@ -90,7 +90,6 @@ async function commonStuff(obj) {
 }
 
 async function submitResults(obj) {
-    console.log("aa")
     //Players
     await common.sql('UPDATE players SET Wins = Wins + 1 WHERE uid = ?', [obj.winnerName])
         .catch((err) => {
