@@ -15,7 +15,7 @@ const sodbotReplies = [
 
 module.exports.info = (message) => {
     const table = new AsciiTable('Info');
-    table.setHeading('PTRDBot ' + config.version);
+    table.setHeading(`${config.botName} ${config.version}`);
     table.addRow("Written and maintained by mbetts.");
     table.addRow("Find any bugs or want to contribute? Please make an issue/PR on the Github page below.")
     table.addRow("https://github.com/matthewbetts96/SD2-SODBOT");
