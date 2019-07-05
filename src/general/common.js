@@ -98,7 +98,7 @@ module.exports.allies = {
     "26th Guards": true,
     "44th Guards": true,
     "184th Guards": true,
-    "3rd Us Armoured": true,
+    "3rd Us Armored": true,
     "3rd Canadian Infantry": true,
     "15th Infantry": true,
     "2e Blindee": true,
