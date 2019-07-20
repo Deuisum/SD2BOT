@@ -1,9 +1,9 @@
 {
 	"prefix": "!",
 	"logFileName": "log.txt",
-	"botName": "SD II Bot",
-	"version": "1.0.1",
-	"token": "NDU0MjA4NzE3NjY0MDI2NjI0.D1yALw.vAKJiYFACBh5akXxXwloO71eHo4",
+	"botName": "SODBOT II ",
+	"version": "1.1.0",
+	"token": "",
 	"tts_enabled_global": true,
 	"max_purge_num": 20,
 	"k_value": 32,

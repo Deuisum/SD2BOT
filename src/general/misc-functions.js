@@ -2,6 +2,8 @@ const common = require("./common");
 const config = require("../config");
 const helpCmd = require("./help-embeds");
 const AsciiTable = require('ascii-table');
+const fetch = require('node-fetch');
+const fileType = require('file-type');
 
 const sodbotReplies = [
     "hit! Target destroyed!",
@@ -107,7 +109,7 @@ module.exports.piat = (message) => {
     if (rateLimiter()) {
         if (i > 0.98) {
             common.reply(message, sodbotReplies[Math.floor(Math.random() * sodbotReplies.length)], true)
-        } else if (i < 0.01) {
+        } else if (i < 0.001) {
             specialPiat(message)
         } else {
             common.reply(message, "Miss!")
@@ -120,7 +122,7 @@ function specialPiat(message) {
     const name = message.author.username;
     const k = Math.random();
     k < 0.90
-        ? (common.reply(message, `You hit!`, true), setTimeout(() => { common.reply(message, `Just kidding, you didn't.`, true) }, 2500))
+        ? (common.reply(message, `You hit!`, true), setTimeout(() => { common.reply(message, `Just kidding, you didn't.`, true) }, 5000))
         : (
             common.say(message, `Private ${name} has dishonored himself and dishonored the discord. I have tried to help him. But I have failed.`, true),
             setTimeout(() => {
@@ -129,9 +131,9 @@ function specialPiat(message) {
                     common.say(message, `So, from now on, whenever Private ${name} fucks up, I will not punish him! I will punish all of YOU!`, true)
                     setTimeout(() => {
                         common.say(message, `And the way I see it ladies, you owe me for ONE JELLY DOUGHNUT! NOW GET ON YOUR FACES!`, true)
-                    }, 8800);
-                }, 9000);
-            }, 7000)
+                    }, 10000);
+                }, 10000);
+            }, 10000)
         )
 }
 

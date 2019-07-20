@@ -6,6 +6,7 @@ const misc = require("./general/misc-functions");
 const map = require("./general/map-functions");
 const div = require("./general/division-functions");
 const results = require("./results/results-main");
+const extract = require("./results/extractData")
 
 const token = config.token;
 const bot = new Discord.Client();
@@ -198,6 +199,15 @@ bot.on('message', message => {
 	if (message.content.startsWith(config.prefix)) {
 		next(message);
 	}
+
+
+	if (message.attachments.first()) {
+		if (message.attachments.first().url.endsWith(".rpl3")) {
+			extract.replayInfo(message)
+		}
+	}
+
+	// console.log(message.attachments.first().url.endsWith(".rpl3"))
 });
 
 async function next(message) {
