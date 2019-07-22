@@ -98,12 +98,12 @@ const map = {
     "_2x2_Lenina_LD_1v1": "Lenina1",
     "_2x2_Lenina_LD_1v1_BKT": "Lenina1",
     "_2x2_Lenina_LD_1v1_CQC": "Lenina1",
-    "_2x2_Plateau_Central_Orsha_E_LD_1v1": "Orsha East",
-    "_2x2_Plateau_Central_Orsha_E_LD_1v1_BKT": "Orsha East",
-    "_2x2_Plateau_Central_Orsha_E_LD_1v1_CQC": "Orsha East",
-    "_2x1_Proto_levelBuild_Orsha_N_LD_1v1": "Orsha North",
-    "_2x1_Proto_levelBuild_Orsha_N_LD_1v1_BKT": "Orsha North",
-    "_2x1_Proto_levelBuild_Orsha_N_LD_1v1_CQC": "Orsha North",
+    "_2x2_Plateau_Central_Orsha_E_LD_1v1": "Orsha_East",
+    "_2x2_Plateau_Central_Orsha_E_LD_1v1_BKT": "Orsha_East",
+    "_2x2_Plateau_Central_Orsha_E_LD_1v1_CQC": "Orsha_East",
+    "_2x1_Proto_levelBuild_Orsha_N_LD_1v1": "Orsha_North",
+    "_2x1_Proto_levelBuild_Orsha_N_LD_1v1_BKT": "Orsha_North",
+    "_2x1_Proto_levelBuild_Orsha_N_LD_1v1_CQC": "Orsha_North",
     "_2x2_Ostrowno_LD_1v1": "Ostrowno1",
     "_2x2_Ostrowno_LD_1v1_BKT": "Ostrowno1",
     "_2x2_Ostrowno_LD_1v1_CQC": "Ostrowno1",
@@ -113,27 +113,27 @@ const map = {
     "_2x2_Lacs_Sianno_LD_1v1": "Sianno",
     "_2x2_Lacs_Sianno_LD_1v1_BKT": "Sianno",
     "_2x2_Lacs_Sianno_LD_1v1_CQC": "Sianno",
-    "_2x2_Slutsk_E_LD_1v1": "Slutsk East",
-    "_2x2_Slutsk_E_LD_1v1_BKT": "Slutsk East",
-    "_2x2_Slutsk_E_LD_1v1_CQC": "Slutsk East",
-    "_2x2_Slutsk_W_LD_1v1": "Slutsk West",
-    "_2x2_Slutsk_W_LD_1v1_BKT": "Slutsk West",
-    "_2x2_Slutsk_W_LD_1v1_CQC": "Slutsk West",
+    "_2x2_Slutsk_E_LD_1v1": "Slutsk_East",
+    "_2x2_Slutsk_E_LD_1v1_BKT": "Slutsk_East",
+    "_2x2_Slutsk_E_LD_1v1_CQC": "Slutsk_East",
+    "_2x2_Slutsk_W_LD_1v1": "Slutsk_West",
+    "_2x2_Slutsk_W_LD_1v1_BKT": "Slutsk_West",
+    "_2x2_Slutsk_W_LD_1v1_CQC": "Slutsk_West",
     "_2x2_Slutsk_LD_1v1": "Slutsk1",
     "_2x2_Slutsk_LD_1v1_BKT": "Slutsk1",
     "_2x2_Slutsk_LD_1v1_CQC": "Slutsk1",
     "_2x2_Foret_Tsel_LD_1v1": "Tsel",
     "_2x2_Foret_Tsel_LD_1v1_BKT": "Tsel",
     "_2x2_Foret_Tsel_LD_1v1_CQC": "Tsel",
-    "_3x2_Highway_LD_CQC": "Autobahn Zur Holle",
-    "_3x2_Highway_LD_CQC_BKT": "Autobahn Zur Holle",
-    "_3x2_Highway_LD_CQC_CQC": "Autobahn Zur Holle",
+    "_3x2_Highway_LD_CQC": "Autobahn_Zur_Holle",
+    "_3x2_Highway_LD_CQC_BKT": "Autobahn_Zur_Holle",
+    "_3x2_Highway_LD_CQC_CQC": "Autobahn_Zur_Holle",
     "_3x2_Beshankovichy_LD_2v2": "Beshankovichy",
     "_3x2_Beshankovichy_LD_2v2_BKT": "Beshankovichy",
     "_3x2_Beshankovichy_LD_2v2_CQC": "Beshankovichy",
-    "_3x2_West_Bobrujsk_LD_2v2": "Bobrujsk West",
-    "_3x2_West_Bobrujsk_LD_2v2_BKT": "Bobrujsk West",
-    "_3x2_West_Bobrujsk_LD_2v2_CQC": "Bobrujsk West",
+    "_3x2_West_Bobrujsk_LD_2v2": "Bobrujsk_West",
+    "_3x2_West_Bobrujsk_LD_2v2_BKT": "Bobrujsk_West",
+    "_3x2_West_Bobrujsk_LD_2v2_CQC": "Bobrujsk_West",
     "_3x2_Lenina_LD_2v2": "Lenina2",
     "_3x2_Lenina_LD_2v2_CQC": "Lenina2",
     "_3x2_Lenina_LD_2v2_BKT": "Lenina2",
@@ -152,9 +152,9 @@ const map = {
     "_3x2_Veselovo_LD_2v2": "Veselovo",
     "_3x2_Veselovo_LD_2v2_CQC": "Veselovo",
     "_3x2_Veselovo_LD_2v2_BKT": "Veselovo",
-    "_3x2_East_Vitebsk_LD_2v2": "Vitebsk East",
-    "_3x2_East_Vitebsk_LD_2v2_CQC": "Vitebsk East",
-    "_3x2_East_Vitebsk_LD_2v2_BKT": "Vitebsk East",
+    "_3x2_East_Vitebsk_LD_2v2": "Vitebsk_East",
+    "_3x2_East_Vitebsk_LD_2v2_CQC": "Vitebsk_East",
+    "_3x2_East_Vitebsk_LD_2v2_BKT": "Vitebsk_East",
     "_3x2_Urban_roads_Krupki_LD_3v3": "Krupki",
     "_3x2_Urban_roads_Krupki_LD_3v3_CQC": "Krupki",
     "_3x2_Urban_roads_Krupki_LD_3v3_BKT": "Krupki",
@@ -170,15 +170,15 @@ const map = {
     "_3x2_Mogilev_LD_3v3": "Mogilev",
     "_3x2_Mogilev_LD_3v3_BKT": "Mogilev",
     "_3x2_Mogilev_LD_3v3_CQC": "Mogilev",
-    "_3x2_Marecages_Naratch_lake_LD_3v3": "Naratch Lake",
-    "_3x2_Marecages_Naratch_lake_LD_3v3_BKT": "Naratch Lake",
-    "_3x2_Marecages_Naratch_lake_LD_3v3_CQC": "Naratch Lake",
+    "_3x2_Marecages_Naratch_lake_LD_3v3": "Naratch_Lake",
+    "_3x2_Marecages_Naratch_lake_LD_3v3_BKT": "Naratch_Lake",
+    "_3x2_Marecages_Naratch_lake_LD_3v3_CQC": "Naratch_Lake",
     "_3x2_Ostrowno_LD_3v3": "Ostrowno3",
     "_3x2_Ostrowno_LD_3v3_BKT": "Ostrowno3",
     "_3x2_Ostrowno_LD_3v3_CQC": "Ostrowno3",
-    "_3x2_Rivers_Pleshchenitsy_S_LD_3v3": "Pleshchenitsy South",
-    "_3x2_Rivers_Pleshchenitsy_S_LD_3v3_CQC": "Pleshchenitsy South",
-    "_3x2_Rivers_Pleshchenitsy_S_LD_3v3_BKT": "Pleshchenitsy South",
+    "_3x2_Rivers_Pleshchenitsy_S_LD_3v3": "Pleshchenitsy_South",
+    "_3x2_Rivers_Pleshchenitsy_S_LD_3v3_CQC": "Pleshchenitsy_South",
+    "_3x2_Rivers_Pleshchenitsy_S_LD_3v3_BKT": "Pleshchenitsy_South",
     "_3x2_Shchedrin_LD_3v3": "Shchedrin3",
     "_3x2_Shchedrin_LD_3v3_CQC": "Shchedrin3",
     "_3x2_Shchedrin_LD_3v3_BKT": "Shchedrin3",
@@ -224,7 +224,6 @@ module.exports.replayInfo = (message) => {
         const endData = content.toString().split(`{"result":`)[1]
         const endResult = JSON.parse(`{"data":${endData}`)
 
-
         if (playerCount > 4) {
             message.channel.send(`Apologies, but ${config.botName} does not support full parsing games larger than 2v2's.`)
             return;
@@ -262,24 +261,24 @@ module.exports.replayInfo = (message) => {
             }
         })
 
-        const embed = new Discord.RichEmbed()
+        const embed = new Discord.RichEmbed();
         gameDataTrimmed.forEach((i, index) => {
             if (!index) {
+                const mapName = map[i.map];
+                const attachment = new Discord.Attachment(`general/images/${mapName}.jpg`);
                 embed.setColor('#0099ff')
                 embed.setTitle(i.serverName ? i.serverName : "Skirmish Game")
                 embed.addField('Score Limit', `${scoreLimit[i.scoreLimit]} (${i.scoreLimit})`, true)
                 embed.addField('Time Limit', getGameDuration(i.timeLimit), true)
-                embed.addField('Map', map[i.map], true)
+                embed.addField('Map', map[i.map].replace("_", " ").replace("_", " "), true)
                 embed.addField('Income', income[i.income], true)
                 embed.addField('Duration', `||${getGameDuration(endResult.data.Duration)}||`, true)
                 embed.addField('Game Outcome', `||${victory[endResult.data.Victory]}||`, true)
                 embed.addField('Game mode', mode[i.vicCond], true)
-                const mapName = map[i.map]
-                const attachment = new Discord.Attachment(`general/images/${mapName}.jpg`, `${mapName}.jpg`);
-                embed.attachFile(attachment)
-                embed.setImage(`attachment://${mapName}.jpg`);
                 embed.setFooter(`Game Version: ${i.gameVersion}`);
                 embed.addBlankField()
+                embed.attachFile(attachment)
+                embed.setImage(`attachment://${mapName}.jpg`);
             } else {
                 embed.addField("Player:", `${i.name ? i.name : "AI Player"} (uid: ${i.userID})`)
                 embed.addField("Division", getDivision(i.deckCode), true)
@@ -290,11 +289,17 @@ module.exports.replayInfo = (message) => {
                 embed.addBlankField()
             }
         })
-        //needs work
-        //embed.addField("Winner", "||dasdasd||")
         message.channel.send(embed)
-
     })
+
+
+    if (message.content.includes("result")) {
+        if (playerCount <= 2) {
+            parseIntoDb(gameDataTrimmed, result, endResult)
+        } else {
+            //err msg
+        }
+    }
 }
 
 function getDivision(code) {
@@ -309,4 +314,9 @@ function getDivision(code) {
     }
     const divs = { ...axisDivs, ...alliesDivs }
     return divs[binaryData.slice(12, 25)];
+}
+
+
+function parseIntoDb(gameData, startData, endData) {
+
 }

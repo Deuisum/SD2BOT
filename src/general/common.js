@@ -126,21 +126,21 @@ module.exports.maps1v1 = {
     "Haroshaje": true,
     "Krupa": true,
     "Lenina1": true,
-    "Orsha East": true,
-    "Orsha North": true,
+    "Orsha_East": true,
+    "Orsha_North": true,
     "Ostrowno1": true,
     "Shchedrin1": true,
     "Sianno": true,
-    "Slutsk East": true,
-    "Slutsk West": true,
+    "Slutsk_East": true,
+    "Slutsk_West": true,
     "Slutsk1": true,
     "Tsel": true
 }
 
 module.exports.maps2v2 = {
-    "Autobahn Zur Holle": true,
+    "Autobahn_Zur_Holle": true,
     "Beshankovichy": true,
-    "Bobrujsk West": true,
+    "Bobrujsk_West": true,
     "Lenina2": true,
     "Losnica": true,
     "Novka": true,
@@ -148,7 +148,7 @@ module.exports.maps2v2 = {
     "Shchedrin2": true,
     "Slutsk2": true,
     "Veselovo": true,
-    "Vitebsk East": true,
+    "Vitebsk_East": true,
 }
 
 module.exports.maps3v3 = {
@@ -157,9 +157,9 @@ module.exports.maps3v3 = {
     "Lipen": true,
     "Lyakhavichy": true,
     "Mogilev": true,
-    "Naratch Lake": true,
+    "Naratch_Lake": true,
     "Ostrowno3": true,
-    "Pleshchenitsy South": true,
+    "Pleshchenitsy_South": true,
     "Shchedrin3": true,
     "Slutsk3": true,
     "Smolyany": true,
