@@ -97,7 +97,10 @@ module.exports.banning_unbanningMaps = (message, msgInput, unbanBool) => {
     ...common.maps4v4
   };
   msgInput.forEach((i, index) => {
-    msgInput[index] = common.alterUserInput(msgInput[index]);
+    msgInput[index] = common
+      .alterUserInput(msgInput[index])
+      .replace(" ", "_")
+      .replace(" ", "_");
     if (!allMaps.hasOwnProperty(msgInput[index])) {
       errorInInput = true;
       if (msgInput[index] === `${config.prefix}banmap`) {
@@ -219,5 +222,5 @@ module.exports.resetMaps = message => {
   for (key in common.maps4v4) {
     common.maps4v4[key] = true;
   }
-  message.channel.reply("Map pool reset.");
+  message.reply("Map pool reset.");
 };

@@ -24,10 +24,11 @@ module.exports.moduleDisabledMsg = (message, moduleName) => {
 
 module.exports.alterUserInput = input => {
   return input
+    .trim()
     .toLowerCase()
-    .split(" ")
+    .split("_")
     .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-    .join(" ");
+    .join("_");
 };
 
 /**
