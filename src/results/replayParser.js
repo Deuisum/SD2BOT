@@ -279,20 +279,33 @@ async function workOutOutcome(
     return { winner: "", loser: "", outCome: "" };
   }
 
-  const winObj = authorIsP1 ? p1Victory : p2Victory;
-  const outcome = winObj[endData.data.Victory];
-
-  let winner;
-  let loser;
-  if (winObj === p1Victory) {
+  if (endData.data.Victory === 3) {
+    message.channel.send(
+      "SODBOT does not currently support draws, please contact an admin to have your results manually added."
+    );
+    return { winner: "", loser: "", outCome: "" };
+  }
+  if (authorIsP1 && endData.data.Victory < 3) {
+    winner = player2DbData[0];
+    loser = player1DbData[0];
+  } else if (authorIsP1 && endData.data.Victory > 3) {
     winner = player1DbData[0];
     loser = player2DbData[0];
-  } else {
+  }
+
+  if (!authorIsP1 && endData.data.Victory < 3) {
+    winner = player1DbData[0];
+    loser = player2DbData[0];
+  } else if (authorIsP1 && endData.data.Victory > 3) {
     winner = player2DbData[0];
     loser = player1DbData[0];
   }
 
-  return { winner: winner, loser: loser, outCome: outcome };
+  return {
+    winner: winner,
+    loser: loser,
+    outCome: victory[endData.data.Victory]
+  };
 }
 
 async function fetchPlayerData(playerEugenUID) {
@@ -513,7 +526,7 @@ const mode = {
   5: "Breakthrough"
 };
 
-const p1Victory = {
+const victory = {
   0: "Total Defeat",
   1: "Major Defeat",
   2: "Minor Defeat",
@@ -521,16 +534,6 @@ const p1Victory = {
   4: "Minor Victory",
   5: "Major Victory",
   6: "Total Victory"
-};
-
-const p2Victory = {
-  6: "Total Defeat",
-  5: "Major Defeat",
-  4: "Minor Defeat",
-  3: "Draw",
-  2: "Minor Victory",
-  1: "Major Victory",
-  0: "Total Victory"
 };
 
 const scoreLimit = {
