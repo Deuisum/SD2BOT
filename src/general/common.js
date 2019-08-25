@@ -26,9 +26,9 @@ module.exports.alterUserInput = input => {
   return input
     .trim()
     .toLowerCase()
-    .split("_")
+    .split(/[_|\s]+/)
     .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-    .join("_");
+    .join(" ");
 };
 
 /**
@@ -140,7 +140,8 @@ module.exports.maps1v1 = {
   Slutsk_East: true,
   Slutsk_West: true,
   Slutsk1: true,
-  Tsel: true
+  Tsel: true,
+  Siedlce: true
 };
 
 module.exports.maps2v2 = {
@@ -154,7 +155,8 @@ module.exports.maps2v2 = {
   Shchedrin2: true,
   Slutsk2: true,
   Veselovo: true,
-  Vitebsk_East: true
+  Vitebsk_East: true,
+  Siedlce2: true
 };
 
 module.exports.maps3v3 = {

@@ -3,7 +3,7 @@ const config = require("../config");
 const AsciiTable = require("ascii-table");
 
 function removeUndefinedInTable(obj) {
-  if (obj === undefined) {
+  if (!obj) {
     obj = [];
     obj[0] = "";
     obj[1] = "";
@@ -27,23 +27,23 @@ module.exports.pickUnbannedMap = pickUnbannedMap = maps => {
 module.exports.allMaps = message => {
   const table = new AsciiTable("Maps");
   table.setHeading("1v1", "2v2", "3v3", "4v4");
-  for (let i = 0; i < 13; i++) {
+  for (let i = 0; i < 14; i++) {
     //13 is max number of items in the 4 objects
     let maps1 = Object.keys(common.maps1v1)[i];
     let maps2 = Object.keys(common.maps2v2)[i];
     let maps3 = Object.keys(common.maps3v3)[i];
     let maps4 = Object.keys(common.maps4v4)[i];
 
-    if (maps1 === undefined) {
+    if (!maps1) {
       maps1 = "";
     }
-    if (maps2 === undefined) {
+    if (!maps2) {
       maps2 = "";
     }
-    if (maps3 === undefined) {
+    if (!maps3) {
       maps3 = "";
     }
-    if (maps4 === undefined) {
+    if (!maps4) {
       maps4 = "";
     }
     table.addRow(maps1, maps2, maps3, maps4);
@@ -176,16 +176,16 @@ module.exports.banning_unbanningMaps = (message, msgInput, unbanBool) => {
 module.exports.bannedMaps = bannedMaps = message => {
   const table = new AsciiTable("");
   table.setHeading(
-    "1v1 Maps",
-    "Banned?",
-    "2v2 Maps",
-    "Banned?",
-    "3v3 Maps",
-    "Banned?",
-    "4v4 Maps",
-    "Banned?"
+    "1v1",
+    "Banned",
+    "2v2",
+    "Banned",
+    "3v3",
+    "Banned",
+    "4v4",
+    "Banned"
   );
-  for (let i = 0; i < 13; i++) {
+  for (let i = 0; i < 14; i++) {
     //13 is max number of items in the 4 objects
     let maps1 = Object.entries(common.maps1v1)[i];
     let maps2 = Object.entries(common.maps2v2)[i];

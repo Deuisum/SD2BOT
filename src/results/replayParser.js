@@ -47,9 +47,7 @@ module.exports.replayInfo = async message => {
       const playerCount = Object.keys(startData).length - 1;
       if (playerCount !== 2) {
         message.channel.send(
-          `Apologies, but ${
-            config.botName
-          } does not support parsing games that are not 1v1's.`
+          `Apologies, but ${config.botName} does not support parsing games that are not 1v1's.`
         );
         return;
       }
@@ -204,6 +202,11 @@ async function fetchAllData(startData, endData, message) {
     player1Name,
     player2Name
   );
+
+  console.log("p1", player1DbData);
+  console.log("p2", player2DbData);
+  console.log("endData", endData);
+
   return {
     player1Name,
     player2Name,
@@ -285,20 +288,32 @@ async function workOutOutcome(
     );
     return { winner: "", loser: "", outCome: "" };
   }
-  if (authorIsP1 && endData.data.Victory < 3) {
-    winner = player2DbData[0];
-    loser = player1DbData[0];
-  } else if (authorIsP1 && endData.data.Victory > 3) {
-    winner = player1DbData[0];
-    loser = player2DbData[0];
+
+  if (authorIsP1 === undefined) {
+    message.channel.send(
+      "You should never see this message, something has gone wrong."
+    );
+    return { winner: "", loser: "", outCome: "" };
   }
 
-  if (!authorIsP1 && endData.data.Victory < 3) {
-    winner = player1DbData[0];
-    loser = player2DbData[0];
-  } else if (authorIsP1 && endData.data.Victory > 3) {
-    winner = player2DbData[0];
-    loser = player1DbData[0];
+  if (authorIsP1) {
+    if (endData.data.Victory < 3) {
+      winner = player2DbData[0];
+      loser = player1DbData[0];
+    } else {
+      winner = player1DbData[0];
+      loser = player2DbData[0];
+    }
+  }
+
+  if (!authorIsP1) {
+    if (endData.data.Victory < 3) {
+      winner = player1DbData[0];
+      loser = player2DbData[0];
+    } else {
+      winner = player2DbData[0];
+      loser = player1DbData[0];
+    }
   }
 
   return {
@@ -491,7 +506,8 @@ const alliesDivs = {
   "0011110001100": "3rd (US) Armored",
   "0100010011001": "2nd (FR) Armoured",
   "0100010011000": "15th Infantry",
-  "0011110000100": "3rd Canadian Infantry"
+  "0011110000100": "3rd Canadian Infantry",
+  "0100110000111": "84th Gvard. Strelkovy"
 };
 
 const axisDivs = {
@@ -508,7 +524,8 @@ const axisDivs = {
   "0100010011100": "352nd Infantry",
   "0100010001011": "Koruck 559",
   "0100010001100": "1st Lovas",
-  "0100010001101": "12th Tartalek"
+  "0100010001101": "12th Tartalek",
+  "0100110000110": "25th Panzergrenadier"
 };
 
 const incomeLevel = {
@@ -645,6 +662,9 @@ const map = {
   _3x2_Bridges_Smolyany_LD_3v3: "Smolyany",
   _3x2_Bridges_Smolyany_LD_3v3_CQC: "Smolyany",
   _3x2_Bridges_Smolyany_LD_3v3_BKT: "Smolyany",
+  _3x2_Siedlce_LD_2v2: "Siedlce",
+  _3x2_Siedlce_LD_2v2_BKT: "Siedlce",
+  _3x2_Siedlce_LD_2v2_CQC: "Siedlce",
   _4x2_Lenina_LD_4v4: "Lenina4",
   _4x2_Lenina_LD_4v4_CQC: "Lenina4",
   _4x2_Lenina_LD_4v4_BKT: "Lenina4",
