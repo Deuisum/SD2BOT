@@ -141,7 +141,7 @@ module.exports.replayInfo = async message => {
       embed.addField("Deck Code", player2DeckCode);
 
       message.channel.send(embed);
-      if (message.channel.name.includes("results")) {
+      if (message.channel.name.includes("league-replays")) {
         if (winner) {
           addToDb(
             player1DiscordId,
@@ -284,14 +284,14 @@ async function workOutOutcome(
 
   if (endData.data.Victory === 3) {
     message.channel.send(
-      "SODBOT does not currently support draws, please contact an admin to have your results manually added."
+      "SODBOT does not currently support draws, please contact an <@84696940742193152> to have your results manually added."
     );
     return { winner: "", loser: "", outCome: "" };
   }
 
   if (authorIsP1 === undefined) {
     message.channel.send(
-      "You should never see this message, something has gone wrong."
+      "You should never see this message, something has gone badly wrong."
     );
     return { winner: "", loser: "", outCome: "" };
   }
@@ -466,8 +466,6 @@ async function addToDb(
       console.log("player2Division Picks", err);
     });
 
-  // ---------------------------------------------------------------------------//
-
   const a = player1DiscordId === winner.DiscordUID ? 1 : 0;
   const b = player2DiscordId === winner.DiscordUID ? 1 : 0;
   message.channel.send("Results Submitted.");
@@ -537,6 +535,7 @@ const incomeLevel = {
   5: "Very High"
 };
 
+//Need to double check this - why missing numbers?
 const mode = {
   2: "Conquest",
   3: "Closer Combat",
@@ -560,6 +559,9 @@ const scoreLimit = {
 };
 
 const map = {
+  _3x2_Siedlce_LD_1v1: "Siedlce",
+  _3x2_Siedlce_LD_1v1_CQC: "Siedlce",
+  _3x2_Siedlce_LD_1v1_BKT: "Siedlce",
   _2x2_Urban_River_Bobr_LD_1v1: "Bobr",
   _2x2_Urban_River_Bobr_LD_1v1_BKT: "Bobr",
   _2x2_Urban_River_Bobr_LD_1v1_CQC: "Bobr",
