@@ -141,7 +141,7 @@ module.exports.replayInfo = async message => {
       embed.addField("Deck Code", player2DeckCode);
 
       message.channel.send(embed);
-      if (message.channel.name.includes("league-replays")) {
+      if (message.channel.name.includes("replays")) {
         if (winner) {
           addToDb(
             player1DiscordId,
@@ -202,10 +202,6 @@ async function fetchAllData(startData, endData, message) {
     player1Name,
     player2Name
   );
-
-  console.log("p1", player1DbData);
-  console.log("p2", player2DbData);
-  console.log("endData", endData);
 
   return {
     player1Name,
