@@ -29,6 +29,8 @@ module.exports.createTables = async message => {
     "CREATE TABLE IF NOT EXISTS blacklist(blockedUID integer PRIMARY KEY, blockedName text NOT NULL, date text NOT NULL)";
   const adminTable =
     "CREATE TABLE IF NOT EXISTS admins(UID text PRIMARY KEY, Name text NOT NULL)";
+  const pastReplays =
+    "CREATE TABLE IF NOT EXISTS pastReplays(UID text PRIMARY KEY)";
 
   db.serialize(() => {
     db.run(sqlPlayer, err => {
@@ -68,6 +70,14 @@ module.exports.createTables = async message => {
         console.log(err);
       } else {
         console.log("'blacklistTable' table created if it doesn't exist.");
+      }
+    });
+
+    db.run(pastReplays, err => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("'pastReplays' table created if it doesn't exist.");
       }
     });
   });
@@ -244,9 +254,7 @@ module.exports.purge = async (message, num) => {
   if (num > config.max_purge_num || num <= 0) {
     common.reply(
       message,
-      `Error. ${num} is invalid. Please choose a number less than ${
-        config.max_purge_num
-      } and greater than 0.`
+      `Error. ${num} is invalid. Please choose a number less than ${config.max_purge_num} and greater than 0.`
     );
     return;
   }

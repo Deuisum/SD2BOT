@@ -33,10 +33,9 @@ module.exports.updateTable = async (
     message,
     `<@${p1uid}> Updated ELO: ||${newP1Elo.toFixed(2)} (${
       p1EloChange < 0 ? "" : "+"
-    }${p1EloChange.toFixed(2)})
-     <@${p2uid}> Updated ELO: ${newP2Elo.toFixed(2)} (${
-      p2EloChange < 0 ? "" : "+"
-    }${p2EloChange.toFixed(2)})||`
+    }${p1EloChange.toFixed(2)})||<@${p2uid}> Updated ELO: ||${newP2Elo.toFixed(
+      2
+    )} (${p2EloChange < 0 ? "" : "+"}${p2EloChange.toFixed(2)})||`
   );
 };
 
