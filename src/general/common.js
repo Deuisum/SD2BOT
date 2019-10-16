@@ -92,7 +92,6 @@ module.exports.connect = connect = () => {
   });
 };
 
-//todo proper names for scots and french and 352
 module.exports.allies = {
   "2nd Guards": true,
   "29th Tank Corps": true,
@@ -107,7 +106,9 @@ module.exports.allies = {
   "3rd Us Armored": true,
   "3rd Canadian Infantry": true,
   "15th Infantry": true,
-  "2e Blindee": true
+  "2e Blindee": true,
+  "Armia Krajowa": true,
+  "1st Polish Infantry": true
 };
 
 module.exports.axis = {
@@ -124,7 +125,9 @@ module.exports.axis = {
   "Pz Lehr": true,
   "116 Panzer": true,
   "352 Infantry": true,
-  "1 Skijager": true
+  "1 Skijager": true,
+  "5 Panzer Wiking": true,
+  "Fallschrim Panzer H G": true
 };
 
 module.exports.maps1v1 = {
@@ -141,7 +144,10 @@ module.exports.maps1v1 = {
   Slutsk_West: true,
   Slutsk1: true,
   Tsel: true,
-  Siedlce: true
+  Siedlce: true,
+  Brest_West: true,
+  Gora_Kalwaria: true,
+  Zbuczyn: true
 };
 
 module.exports.maps2v2 = {
@@ -156,7 +162,9 @@ module.exports.maps2v2 = {
   Slutsk2: true,
   Veselovo: true,
   Vitebsk_East: true,
-  Siedlce2: true
+  Siedlce2: true,
+  Brest_West2: true,
+  Zbuczyn2: true
 };
 
 module.exports.maps3v3 = {
@@ -177,5 +185,6 @@ module.exports.maps4v4 = {
   Lenina4: true,
   Ostrowno4: true,
   Shchedrin4: true,
-  Slutsk4: true
+  Slutsk4: true,
+  Gora_Kalwaria4: true
 };

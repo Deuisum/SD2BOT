@@ -11,7 +11,7 @@ function getGameDuration(time) {
   }
   const minutes = Math.floor(time / 60);
   const seconds = time - minutes * 60;
-  return `${minutes} minute(s) : ${seconds} second(s)`;
+  return `${minutes} minutes : ${seconds} seconds`;
 }
 
 function getDivision(code) {
@@ -151,6 +151,7 @@ module.exports.replayInfo = async message => {
             mapName,
             winner,
             loser,
+            duration,
             message
           );
         }
@@ -337,8 +338,24 @@ async function addToDb(
   mapName,
   winner,
   loser,
+  duration,
   message
 ) {
+  const uid = `${player1DiscordId}|${player2DiscordId}|${player1Division}|${player2Division}|${mapName}|${duration}`;
+  const isNonDupeReplay = await common
+    .sql("INSERT INTO pastReplays VALUES(?)", [uid])
+    .catch(err => {
+      console.log("Duplicate game");
+    });
+
+  if (isNonDupeReplay === undefined) {
+    common.say(
+      message,
+      "Game already submitted, please contact an admin if this is in error."
+    );
+    return;
+  }
+
   // ---------------------------------------------------------------------------//
   //map
   await common
@@ -501,7 +518,9 @@ const alliesDivs = {
   "0100010011001": "2nd (FR) Armoured",
   "0100010011000": "15th Infantry",
   "0011110000100": "3rd Canadian Infantry",
-  "0100110000111": "84th Gvard. Strelkovy"
+  "0100110000111": "84th Gvard. Strelkovy",
+  "0100110000010": "Armia Krajowa",
+  "0100011111111": "1st Polish Infantry"
 };
 
 const axisDivs = {
@@ -519,7 +538,9 @@ const axisDivs = {
   "0100010001011": "Koruck 559",
   "0100010001100": "1st Lovas",
   "0100010001101": "12th Tartalek",
-  "0100110000110": "25th Panzergrenadier"
+  "0100110000110": "25th Panzergrenadier",
+  "0100110000011": "5 Panzer Wiking",
+  "0100110000011aaaa": "Fallschrim Panzer H G"
 };
 
 const incomeLevel = {

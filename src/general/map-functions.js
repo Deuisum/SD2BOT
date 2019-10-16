@@ -27,8 +27,7 @@ module.exports.pickUnbannedMap = pickUnbannedMap = maps => {
 module.exports.allMaps = message => {
   const table = new AsciiTable("Maps");
   table.setHeading("1v1", "2v2", "3v3", "4v4");
-  for (let i = 0; i < 14; i++) {
-    //13 is max number of items in the 4 objects
+  for (let i = 0; i < Object.keys(common.maps1v1).length; i++) {
     let maps1 = Object.keys(common.maps1v1)[i];
     let maps2 = Object.keys(common.maps2v2)[i];
     let maps3 = Object.keys(common.maps3v3)[i];
@@ -106,9 +105,7 @@ module.exports.banning_unbanningMaps = (message, msgInput, unbanBool) => {
       if (msgInput[index] === `${config.prefix}banmap`) {
         common.say(
           message,
-          `Please state a map, use ${
-            config.prefix
-          }allmaps, to get the list of maps.`
+          `Please state a map, use ${config.prefix}allmaps, to get the list of maps.`
         );
       } else {
         common.say(
@@ -143,22 +140,6 @@ module.exports.banning_unbanningMaps = (message, msgInput, unbanBool) => {
       }
     });
   });
-  Object.entries(common.maps3v3).forEach(([key, val]) => {
-    msgInput.forEach(ikey => {
-      if (key === ikey) {
-        mapsBanned = mapsBanned + key + ", ";
-        common.maps3v3[key] = unbanBool;
-      }
-    });
-  });
-  Object.entries(common.maps4v4).forEach(([key, val]) => {
-    msgInput.forEach(ikey => {
-      if (key === ikey) {
-        mapsBanned = mapsBanned + key + ", ";
-        common.maps4v4[key] = unbanBool;
-      }
-    });
-  });
 
   mapsBanned = mapsBanned.slice(0, -2);
   unbanBool
@@ -175,36 +156,15 @@ module.exports.banning_unbanningMaps = (message, msgInput, unbanBool) => {
 
 module.exports.bannedMaps = bannedMaps = message => {
   const table = new AsciiTable("");
-  table.setHeading(
-    "1v1",
-    "Banned",
-    "2v2",
-    "Banned",
-    "3v3",
-    "Banned",
-    "4v4",
-    "Banned"
-  );
-  for (let i = 0; i < 14; i++) {
-    //13 is max number of items in the 4 objects
+  table.setHeading("1v1", "Banned", "2v2", "Banned");
+  for (let i = 0; i < Object.keys(common.maps1v1).length; i++) {
     let maps1 = Object.entries(common.maps1v1)[i];
     let maps2 = Object.entries(common.maps2v2)[i];
-    let maps3 = Object.entries(common.maps3v3)[i];
-    let maps4 = Object.entries(common.maps4v4)[i];
+
     maps1 = removeUndefinedInTable(maps1);
     maps2 = removeUndefinedInTable(maps2);
-    maps3 = removeUndefinedInTable(maps3);
-    maps4 = removeUndefinedInTable(maps4);
-    table.addRow(
-      maps1[0],
-      maps1[1],
-      maps2[0],
-      maps2[1],
-      maps3[0],
-      maps3[1],
-      maps4[0],
-      maps4[1]
-    );
+
+    table.addRow(maps1[0], maps1[1], maps2[0], maps2[1]);
   }
   common.say(message, "``" + table.toString() + "``");
 };
