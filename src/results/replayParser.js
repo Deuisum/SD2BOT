@@ -36,19 +36,17 @@ module.exports.replayInfo = async message => {
       fileType(buffer);
       content = buffer;
       const start = content
-        .slice(0x38)
+        .slice(0x30)
         .toString()
-        .split("}}")[0];
+        .split(`,"ingamePlayerId`)[0];
       const startData = JSON.parse(`{"data":${start}}}`);
 
       const end = content.toString().split(`{"result":`)[1];
       const endData = JSON.parse(`{"data":${end}`);
 
-      const playerCount = Object.keys(startData).length - 1;
+      const playerCount = Object.keys(startData.data).length - 1;
+
       if (playerCount !== 2) {
-        message.channel.send(
-          `Apologies, but ${config.botName} does not support parsing games that are not 1v1's.`
-        );
         return;
       }
 
@@ -77,7 +75,7 @@ module.exports.replayInfo = async message => {
         winner,
         loser,
         outCome
-      } = await fetchAllData(startData, endData, message);
+      } = await fetchAllData(startData.data, endData, message);
 
       const embed = new Discord.RichEmbed();
 
