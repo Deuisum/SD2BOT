@@ -574,6 +574,18 @@ const scoreLimit = {
 };
 
 const map = {
+  _3x2_Zbuczyn_LD_1v1: "Zbuczyn",
+  _3x2_Zbuczyn_LD_1v1_CQC: "Zbuczyn",
+  _3x2_Zbuczyn_LD_1v1_BKT: "Zbuczyn",
+  _4x2_Vistula_Gora_Kalwaria_LD_1v1: "Gora_Kalwaria",
+  _4x2_Vistula_Gora_Kalwaria_LD_1v1_BKT: "Gora_Kalwaria",
+  _4x2_Vistula_Gora_Kalwaria_LD_1v1_CQC: "Gora_Kalwaria",
+  _3x2_West_Brest_LD_1v1: "Brest_West",
+  _3x2_West_Brest_LD_1v1_CQC: "Brest_West",
+  _3x2_West_Brest_LD_1v1_BKT: "Brest_West",
+  _3x2_West_Brest_LD_3v3: "Brest_West",
+  _3x2_West_Brest_LD_3v3_CQC: "Brest_West",
+  _3x2_West_Brest_LD_3v3_BKT: "Brest_West",
   _3x2_Siedlce_LD_1v1: "Siedlce",
   _3x2_Siedlce_LD_1v1_CQC: "Siedlce",
   _3x2_Siedlce_LD_1v1_BKT: "Siedlce",
@@ -625,6 +637,9 @@ const map = {
   _3x2_West_Bobrujsk_LD_2v2: "Bobrujsk_West",
   _3x2_West_Bobrujsk_LD_2v2_BKT: "Bobrujsk_West",
   _3x2_West_Bobrujsk_LD_2v2_CQC: "Bobrujsk_West",
+  _3x2_West_Brest_LD_2v2: "Brest_West2",
+  _3x2_West_Brest_LD_2v2_CQC: "Brest_West2",
+  _3x2_West_Brest_LD_2v2_BKT: "Brest_West2",
   _3x2_Lenina_LD_2v2: "Lenina2",
   _3x2_Lenina_LD_2v2_CQC: "Lenina2",
   _3x2_Lenina_LD_2v2_BKT: "Lenina2",
@@ -658,6 +673,9 @@ const map = {
   _3x2_Lyakhavichy_LD_3v3: "Lyakhavichy",
   _3x2_Lyakhavichy_LD_3v3_BKT: "Lyakhavichy",
   _3x2_Lyakhavichy_LD_3v3_CQC: "Lyakhavichy",
+  _3x2_Zbuczyn_LD_2v2: "Zbuczyn2",
+  _3x2_Zbuczyn_LD_2v2: "Zbuczyn2",
+  _3x2_Zbuczyn_LD_2v2: "Zbuczyn2",
   _3x2_Mogilev_LD_3v3: "Mogilev",
   _3x2_Mogilev_LD_3v3_BKT: "Mogilev",
   _3x2_Mogilev_LD_3v3_CQC: "Mogilev",
@@ -679,6 +697,9 @@ const map = {
   _3x2_Bridges_Smolyany_LD_3v3: "Smolyany",
   _3x2_Bridges_Smolyany_LD_3v3_CQC: "Smolyany",
   _3x2_Bridges_Smolyany_LD_3v3_BKT: "Smolyany",
+  _3x2_West_Brest_LD_3v3: "Brest_West3",
+  _3x2_West_Brest_LD_3v3_CQC: "Brest_West3",
+  _3x2_West_Brest_LD_3v3_BKT: "Brest_West3",
   _3x2_Siedlce_LD_2v2: "Siedlce",
   _3x2_Siedlce_LD_2v2_BKT: "Siedlce",
   _3x2_Siedlce_LD_2v2_CQC: "Siedlce",
@@ -693,5 +714,8 @@ const map = {
   _3x2_Shchedrin_LD_4v4_BKT: "Shchedrin4",
   _4x2_Slutsk_LD_4v4: "Slutsk4",
   _4x2_Slutsk_LD_4v4_CQC: "Slutsk4",
-  _4x2_Slutsk_LD_4v4_BKT: "Slutsk4"
+  _4x2_Slutsk_LD_4v4_BKT: "Slutsk4",
+  _4x2_Vistula_Gora_Kalwaria_LD_4v4: "Gora_Kalwaria4",
+  _4x2_Vistula_Gora_Kalwaria_LD_4v4_CQC: "Gora_Kalwaria4",
+  _4x2_Vistula_Gora_Kalwaria_LD_4v4_BKT: "Gora_Kalwaria4"
 };
