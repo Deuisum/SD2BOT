@@ -94,8 +94,8 @@ module.exports.connect = connect = () => {
 
 module.exports.allies = {
   "2nd Guards": true,
-  "29th Tank Corps": true,
   "3rd Guards Tank": true,
+  "29th Tank Corps": true,
   "3rd Guards Mech": true,
   "Group Tyurin": true,
   "Group Bezugly": true,
@@ -103,6 +103,7 @@ module.exports.allies = {
   "26th Guards": true,
   "44th Guards": true,
   "184th Guards": true,
+  "84th Guards": true,
   "3rd Us Armored": true,
   "3rd Canadian Infantry": true,
   "15th Infantry": true,
@@ -127,7 +128,8 @@ module.exports.axis = {
   "352 Infantry": true,
   "1 Skijager": true,
   "5 Panzer Wiking": true,
-  "Fallschrim Panzer H G": true
+  "Fallschrim Panzer H G": true,
+  "25th Panzergrenadier": true
 };
 
 module.exports.maps1v1 = {
@@ -178,6 +180,7 @@ module.exports.maps3v3 = {
   Pleshchenitsy_South: true,
   Shchedrin3: true,
   Slutsk3: true,
+  Brest_West3: true,
   Smolyany: true
 };
 

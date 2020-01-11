@@ -5,6 +5,8 @@ const config = require("../config.json");
 const common = require("../general/common");
 const elo = require("../results/results-main");
 
+const fs = require("fs");
+
 function getGameDuration(time) {
   if (time === "0" || time === 0) {
     return "No Limit";
@@ -24,8 +26,10 @@ function getDivision(code) {
     }
     binaryData = binaryData + a;
   }
+
+  const header = parseInt(binaryData.slice(12, 17), 2);
   const divs = { ...axisDivs, ...alliesDivs };
-  return divs[binaryData.slice(12, 25)];
+  return divs[binaryData.slice(17, 17 + header)];
 }
 
 module.exports.replayInfo = async message => {
@@ -39,13 +43,16 @@ module.exports.replayInfo = async message => {
         .slice(0x30)
         .toString()
         .split(`,"ingamePlayerId`)[0];
+      fs.writeFile("Output.txt", start, err => {
+        // In case of a error throw err.
+        if (err) throw err;
+      });
       const startData = JSON.parse(`{"data":${start}}}`);
 
       const end = content.toString().split(`{"result":`)[1];
       const endData = JSON.parse(`{"data":${end}`);
 
       const playerCount = Object.keys(startData.data).length - 1;
-
       if (playerCount !== 2) {
         return;
       }
@@ -502,43 +509,43 @@ for comparison, 1 unit deck:
 */
 
 const alliesDivs = {
-  "0100010000100": "2nd Guards Tank Corps",
-  "0100110000010": "3rd Guards Tank Corps",
-  "0100010000110": "29th Tank Corps",
-  "0100010010000": "3rd Guards Mechanised Corps",
-  "0100010010100": "Maneuver Group Tyurin",
-  "0100010010011": "Maneuver Group Bezugly",
-  "0100010010110": "9th Guards Cavalry",
-  "0100010001111": "26th Guards Rifles",
-  "0100010010001": "44th Guards Rifles",
-  "0100010001110": "184th Rifles",
-  "0011110001100": "3rd (US) Armored",
-  "0100010011001": "2nd (FR) Armoured",
-  "0100010011000": "15th Infantry",
-  "0011110000100": "3rd Canadian Infantry",
-  "0100110000111": "84th Gvard. Strelkovy",
-  "0100110000010": "Armia Krajowa",
-  "0100011111111": "1st Polish Infantry"
+  "10000100": "2nd Guards Tank Corps",
+  "100000100": "3rd Guards Tank Corps",
+  "10000110": "29th Tank Corps",
+  "10010000": "3rd Guards Mechanised Corps",
+  "10010100": "Maneuver Group Tyurin",
+  "10010011": "Maneuver Group Bezugly",
+  "10010110": "9th Guards Cavalry",
+  "10001111": "26th Guards Rifles",
+  "10010001": "44th Guards Rifles",
+  "10001110": "184th Rifles",
+  "1000110": "3rd (US) Armored",
+  "10011001": "2nd (FR) Armoured",
+  "10011000": "15th Infantry",
+  "1000010": "3rd Canadian Infantry",
+  "100001110": "84th Gvard. Strelkovy",
+  "100000101": "Armia Krajowa",
+  "11111111": "1st Polish Infantry"
 };
 
 const axisDivs = {
-  "0011110001110": "5th Panzer",
-  "0100010000111": "20th Panzer",
-  "0100010011011": "21st Panzer",
-  "0100010011010": "116th Panzer",
-  "0100010011101": "Panzer Lehr",
-  "0100010001010": "Gruppe Harteneck",
-  "0100110000001": "1st Skijager",
-  "0100010001001": "78th Sturm",
-  "0100010010101": "14th Infantry",
-  "0100010001000": "28th Jager",
-  "0100010011100": "352nd Infantry",
-  "0100010001011": "Koruck 559",
-  "0100010001100": "1st Lovas",
-  "0100010001101": "12th Tartalek",
-  "0100110000110": "25th Panzergrenadier",
-  "0100110000011": "5 Panzer Wiking",
-  "0100110000011aaaa": "Fallschrim Panzer H G"
+  "1000111": "5th Panzer",
+  "10000111": "20th Panzer",
+  "10011011": "21st Panzer",
+  "10011010": "116th Panzer",
+  "10011101": "Panzer Lehr",
+  "10001010": "Gruppe Harteneck",
+  "100000011": "1st Skijager",
+  "10001001": "78th Sturm",
+  "10010101": "14th Infantry",
+  "10001000": "28th Jager",
+  "10011100": "352nd Infantry",
+  "10001011": "Koruck 559",
+  "10001100": "1st Lovas",
+  "10001101": "12th Tartalek",
+  "100001101": "25th Panzergrenadier",
+  "100000110": "5 Panzer Wiking",
+  "100000111": "Fallschrim Panzer H G"
 };
 
 const incomeLevel = {
