@@ -43,10 +43,6 @@ module.exports.replayInfo = async message => {
         .slice(0x30)
         .toString()
         .split(`,"ingamePlayerId`)[0];
-      fs.writeFile("Output.txt", start, err => {
-        // In case of a error throw err.
-        if (err) throw err;
-      });
       const startData = JSON.parse(`{"data":${start}}}`);
 
       const end = content.toString().split(`{"result":`)[1];
