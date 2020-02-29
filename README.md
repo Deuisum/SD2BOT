@@ -17,5 +17,6 @@ This bot is fan made and has no affiliation with Eugen Systems.
 ~ Results Logging 
 ✖ Results Querying
 ✖ How to install/run in README
+test test
 
 
