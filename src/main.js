@@ -7,7 +7,7 @@ const map = require("./general/map-functions");
 const div = require("./general/division-functions");
 const results = require("./results/results-main");
 const extract = require("./results/replayParser");
-client.login('NjgzMzM0NzE0NjU1NzY4NTc2.XlqDWg.DGKP4SQgjH0ojzbRKPJZ4xjWmYk');
+
 const token = config.token;
 const bot = new Discord.Client();
 
