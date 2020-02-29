@@ -230,4 +230,4 @@ bot.on("ready", async () => {
 });
 
 bot.on("error", console.error);
-bot.login(token);
+bot.login('NjgzMzA3MDI4MTM4OTUwNjY2.Xlp5pA.SCwN5yxgxAz5rkz4Ykr8jpQB2IM');
